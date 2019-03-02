@@ -15,7 +15,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>Main</mainClass>
+                            <mainClass>nju.riverxu.ds.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

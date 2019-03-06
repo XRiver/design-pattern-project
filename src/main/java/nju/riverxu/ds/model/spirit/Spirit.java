@@ -6,5 +6,14 @@ public abstract class Spirit implements Runnable {
     public void setActive(boolean active) {
         this.active = active;
     }
+    public abstract void act();
+    /*
+    DPHint: TemplateMethod
+     */
 
+    public void run() {
+        while(active) {
+            act();
+        }
+    }
 }

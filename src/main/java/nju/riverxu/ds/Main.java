@@ -1,7 +1,9 @@
 package nju.riverxu.ds;
 
+import nju.riverxu.ds.view.MainFrame;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello");
+        MainFrame f = new MainFrame();
     }
 }

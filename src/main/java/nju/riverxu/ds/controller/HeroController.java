@@ -1,5 +1,5 @@
 package nju.riverxu.ds.controller;
 
-public class AController {
+public class HeroController {
     // Yes, it's a MVC
 }

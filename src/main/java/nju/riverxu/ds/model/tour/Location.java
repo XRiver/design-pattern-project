@@ -1,4 +1,4 @@
-package nju.riverxu.ds.model.spirit;
+package nju.riverxu.ds.model.tour;
 
 public class Location {
 }

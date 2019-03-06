@@ -1,4 +1,4 @@
-package nju.riverxu.ds.model;
+package nju.riverxu.ds.model.tour;
 
 import nju.riverxu.ds.model.Dungeon;
 

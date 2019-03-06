@@ -1,4 +1,4 @@
-package nju.riverxu.ds.model;
+package nju.riverxu.ds.model.spirit;
 
 public abstract class Spirit implements Runnable {
 

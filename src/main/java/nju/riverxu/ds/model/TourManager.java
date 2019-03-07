@@ -4,20 +4,9 @@ import nju.riverxu.ds.controller.HeroController;
 import nju.riverxu.ds.model.tour.Tour;
 import nju.riverxu.ds.model.tour.TourId;
 
-public class TourManager {
-    private Tour current = null;
+public interface TourManager {
 
-    public TourManager() {
+    void startNewTour(StatusManager statusManager, TourId tourId);
 
-    }
-
-    public void startNewTour(StatusManager statusManager, TourId tourId) {
-
-    }
-
-
-    public HeroController getHeroController() {
-        //TODO delegate to Tour
-        return null;
-    }
+    HeroController getHeroController();
 }

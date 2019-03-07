@@ -1,7 +1,8 @@
 package nju.riverxu.ds.model;
 
 
-import nju.riverxu.ds.controller.HeroController;
+import nju.riverxu.ds.controller.GameController;
+import nju.riverxu.ds.model.save.SaveManager;
 import nju.riverxu.ds.model.tour.TourId;
 import nju.riverxu.ds.util.*;
 
@@ -23,23 +24,40 @@ import java.util.List;
 public class Game implements Observable {
 
     private static Game instance = new Game();
+    public static Game getInstance() {
+        return instance;
+    }
 
     private TourManager tourManager = null;
     private StatusManager statusManager = null;
+    private SaveManager saveManager = null;
 
     private GameStatus gameStatus = GameStatus.INITING;
 
     private Game(){
+        //TODO not DEBUG!
+        ManagerFactory mf = ManagerFactory.getInstance(ManagerFactoryVersion.DEBUG);
+
+        tourManager = mf.makeTourManager();
+        statusManager = mf.makeStatusManager();
+        saveManager = mf.makeSaveManager();
+
+    }
+
+    public GameController getGameController() {
+        return new GameController();
+    }
+
+    public boolean canContinueFromSave() {
+        return saveManager.hasPrevSave();
+    }
+
+    public void startGame(boolean withPrevSave) {
         //TODO
-        ManagerFactory mf = ManagerFactory.getInstance(ManagerFactoryVersion.V1);
-
-        //tourManager = new TourManager();
-        //statusManager = new StatusManager();
+        notifyAll(EventType.GAME_STARTING, null);
+        gameStatus = GameStatus.UPGRADE;
     }
 
-    public static Game getInstance() {
-        return instance;
-    }
 
     public TourManager getTourManager() {
         return tourManager;
@@ -53,10 +71,6 @@ public class Game implements Observable {
         return gameStatus;
     }
 
-    public void startGame() {
-        //TODO
-        gameStatus = GameStatus.UPGRADE;
-    }
 
     public void startTour(TourId id) {
         //TODO delegate to TourManager

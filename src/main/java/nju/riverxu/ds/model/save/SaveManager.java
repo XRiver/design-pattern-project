@@ -4,6 +4,9 @@ import nju.riverxu.ds.model.MissionStatus;
 import nju.riverxu.ds.model.spirit.HeroStatus;
 
 public interface SaveManager {
+
+    boolean hasPrevSave();
+
     HeroStatus loadHeroStatus();
     MissionStatus loadMissionStatus();
     void saveHeroStatus(HeroStatus saved);

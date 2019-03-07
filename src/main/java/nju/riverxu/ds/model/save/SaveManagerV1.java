@@ -4,16 +4,20 @@ import nju.riverxu.ds.model.MissionStatus;
 import nju.riverxu.ds.model.spirit.HeroStatus;
 
 /**
- * 简单的存档管理
+ * 简单的存档管理,使用json序列化相关对象作为字符串文件存在固定位置
  */
-public class JsonV1SaveManager implements SaveManager{
+public class SaveManagerV1 implements SaveManager{
 
-    private static JsonV1SaveManager instance = new JsonV1SaveManager();
-    private JsonV1SaveManager(){
+    private static SaveManagerV1 instance = new SaveManagerV1();
+    private SaveManagerV1(){
         //TODO
     }
     public static SaveManager getInstance() {
         return instance;
+    }
+
+    public boolean hasPrevSave() {
+        return false;
     }
 
     public HeroStatus loadHeroStatus() {

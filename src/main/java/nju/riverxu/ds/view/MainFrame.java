@@ -1,14 +1,12 @@
 package nju.riverxu.ds.view;
 
-import nju.riverxu.ds.controller.HeroController;
 import nju.riverxu.ds.model.Game;
 import nju.riverxu.ds.model.GameStatus;
 import nju.riverxu.ds.util.EventType;
 import nju.riverxu.ds.util.Observer;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
 
 public class MainFrame extends JFrame implements Observer {
 
@@ -19,7 +17,7 @@ public class MainFrame extends JFrame implements Observer {
     }
 
     private GameInitPanel gameInitPanel = null;
-    private DungeonPanel dungeonPanel = null;
+    private TourPanel tourPanel = null;
     private LogPanel logPanel = null;
     private UpgradePanel upgradePanel = null;
 
@@ -36,8 +34,7 @@ public class MainFrame extends JFrame implements Observer {
         game.addObserver(this);
 
         assert game.getGameStatus() == GameStatus.INITING;
-        gameInitPanel = new GameInitPanel();
-        add(gameInitPanel);
+        setToInitPanel();
 
         setVisible(true);
         // addKeyListener(new HeroController());
@@ -47,10 +44,51 @@ public class MainFrame extends JFrame implements Observer {
         switch (eventType) {
             case GAME_STARTING:
                 setTitle("GAME IS ON");
-                //TODO query game state and show corresponding panels.
+                assert game.getGameStatus() != GameStatus.INITING;
+                resetPanels();
                 break;
             default:
                 break;
         }
+    }
+
+    private void resetPanels() {
+        switch (game.getGameStatus()) {
+            case INITING:
+                setToInitPanel();
+                break;
+            case UPGRADE:
+                setToUpgradePanel();
+                break;
+            case TOUR:
+                setToDungeonPanel();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void clearPanels() {
+        for (Component c: getComponents()) {
+            c.setVisible(false);
+            remove(c);
+        }
+    }
+
+    private void setToInitPanel() {
+        gameInitPanel = new GameInitPanel();
+        clearPanels();
+
+        add(gameInitPanel);
+    }
+
+    private void setToDungeonPanel() {
+        tourPanel = new TourPanel();
+        add(tourPanel);
+        //TODO
+    }
+
+    private void setToUpgradePanel() {
+        //TODO
     }
 }

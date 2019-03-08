@@ -8,4 +8,6 @@ package nju.riverxu.ds.model;
  * 本类的设计视为游戏核心机制，不会修改需求
  */
 public class MissionStatus {
+
+
 }

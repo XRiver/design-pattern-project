@@ -1,7 +1,5 @@
 package nju.riverxu.ds.model.tour;
 
-import nju.riverxu.ds.model.Dungeon;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

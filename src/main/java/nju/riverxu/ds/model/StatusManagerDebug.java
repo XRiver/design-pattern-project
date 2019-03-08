@@ -1,7 +1,6 @@
 package nju.riverxu.ds.model;
 
-import nju.riverxu.ds.controller.HeroController;
-import nju.riverxu.ds.model.tour.Tour;
+import nju.riverxu.ds.model.spirit.HeroStatus;
 import nju.riverxu.ds.model.tour.TourId;
 import nju.riverxu.ds.util.EventType;
 import nju.riverxu.ds.util.Observer;
@@ -9,30 +8,24 @@ import nju.riverxu.ds.util.Observer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TourManagerV1 implements TourManager {
-
-    private static TourManager instance = new TourManagerV1();
-    public static TourManager getInstance() {
+public class StatusManagerDebug implements StatusManager {
+    private static StatusManager instance = new StatusManagerDebug();
+    public static StatusManager getInstance() {
         return instance;
     }
 
-    private Tour current = null;
-
-    private TourManagerV1(){
+    private StatusManagerDebug() {
         //TODO
     }
 
-    public void startNewTour(StatusManager statusManager, TourId tourId) {
+    private HeroStatus heroStatus;
 
-    }
+    private MissionStatus missionStatus;
 
-    public HeroController getHeroController() {
+    public List<TourId> getTourList() {
         return null;
     }
 
-    public Tour getCurrentTour() {
-        return current;
-    }
 
     private List<Observer> observers = new ArrayList<Observer>();
     public void addObserver(Observer observer) {

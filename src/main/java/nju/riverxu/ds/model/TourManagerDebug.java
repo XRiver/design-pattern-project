@@ -9,16 +9,16 @@ import nju.riverxu.ds.util.Observer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TourManagerV1 implements TourManager {
+public class TourManagerDebug implements TourManager {
 
-    private static TourManager instance = new TourManagerV1();
+    private static TourManager instance = new TourManagerDebug();
     public static TourManager getInstance() {
         return instance;
     }
 
     private Tour current = null;
 
-    private TourManagerV1(){
+    private TourManagerDebug(){
         //TODO
     }
 

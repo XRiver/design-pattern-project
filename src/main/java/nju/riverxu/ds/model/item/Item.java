@@ -1,4 +1,7 @@
 package nju.riverxu.ds.model.item;
 
-public abstract class Item {
+interface Item {
+    void use();
+    String getName();
+    double getWeight();
 }

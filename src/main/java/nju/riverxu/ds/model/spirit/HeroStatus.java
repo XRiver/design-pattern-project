@@ -1,9 +1,20 @@
 package nju.riverxu.ds.model.spirit;
 
-/**
- * TODO
- * 包括物品栏、装备栏在内的各种不易变状态
- * 本类的设计视为游戏核心机制，不会修改需求
- */
-public class HeroStatus {
+import nju.riverxu.ds.model.item.ArmorSuite;
+import nju.riverxu.ds.model.item.ConsumableSuite;
+import nju.riverxu.ds.model.item.ItemSuite;
+import nju.riverxu.ds.model.item.WeaponSuite;
+
+public interface HeroStatus {
+    ItemSuite getItemSuite();
+
+    ArmorSuite getArmorSuite();
+
+    ConsumableSuite getConsumableSuite();
+
+    WeaponSuite getWeaponSuite();
+
+    int getAttr(StatusType type);
+
+    void setAttr(StatusType type, int attr);
 }

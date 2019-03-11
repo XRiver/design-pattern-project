@@ -2,7 +2,9 @@ package nju.riverxu.ds.model.item;
 
 import nju.riverxu.ds.model.item.weapon.Fist;
 
-public class WeaponSuite {
+import java.io.Serializable;
+
+public class WeaponSuite implements Serializable {
     private Weapon leftHand = null;
     private Weapon rightHand = null;
 

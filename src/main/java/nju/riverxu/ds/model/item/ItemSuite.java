@@ -1,6 +1,8 @@
 package nju.riverxu.ds.model.item;
 
-public class ItemSuite {
+import java.io.Serializable;
+
+public class ItemSuite implements Serializable {
     private Item[] slots = null;
     public static int MAX_SLOT = 99;
 

@@ -5,7 +5,9 @@ import nju.riverxu.ds.model.item.armor.Helmet;
 import nju.riverxu.ds.model.item.armor.body.NoBodyArmor;
 import nju.riverxu.ds.model.item.armor.head.NoHelmet;
 
-public class ArmorSuite {
+import java.io.Serializable;
+
+public class ArmorSuite implements Serializable {
     private Helmet helmetSlot = null;
     private BodyArmor bodyArmorSlot = null;
 

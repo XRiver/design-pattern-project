@@ -1,7 +1,9 @@
 package nju.riverxu.ds.model.item;
 
 
-public class ConsumableSuite {
+import java.io.Serializable;
+
+public class ConsumableSuite implements Serializable {
     private Consumable[] slots = null;
 
     public static int MAX_SLOT = 10;

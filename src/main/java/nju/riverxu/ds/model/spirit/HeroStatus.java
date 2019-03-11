@@ -5,7 +5,9 @@ import nju.riverxu.ds.model.item.ConsumableSuite;
 import nju.riverxu.ds.model.item.ItemSuite;
 import nju.riverxu.ds.model.item.WeaponSuite;
 
-public interface HeroStatus {
+import java.io.Serializable;
+
+public interface HeroStatus extends Serializable {
     ItemSuite getItemSuite();
 
     ArmorSuite getArmorSuite();

@@ -1,6 +1,8 @@
 package nju.riverxu.ds.model.item;
 
-interface Item {
+import java.io.Serializable;
+
+interface Item extends Serializable {
     void use();
     String getName();
     double getWeight();

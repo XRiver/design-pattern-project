@@ -2,7 +2,9 @@ package nju.riverxu.ds.model.data;
 
 import nju.riverxu.ds.model.spirit.HeroStatus;
 
-public class InitialHero {
+import java.io.Serializable;
+
+public class InitialHero implements Serializable {
     private String name;
     private String description;
     private HeroStatus status;
@@ -35,5 +37,14 @@ public class InitialHero {
 
     public void setStatus(HeroStatus status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "InitialHero{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                '}';
     }
 }

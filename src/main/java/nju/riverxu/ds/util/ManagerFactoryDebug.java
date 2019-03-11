@@ -4,8 +4,10 @@ import nju.riverxu.ds.model.StatusManager;
 import nju.riverxu.ds.model.StatusManagerDebug;
 import nju.riverxu.ds.model.TourManager;
 import nju.riverxu.ds.model.TourManagerDebug;
-import nju.riverxu.ds.model.save.SaveManager;
-import nju.riverxu.ds.model.save.SaveManagerDebug;
+import nju.riverxu.ds.model.data.CharacterInitializeManager;
+import nju.riverxu.ds.model.data.CharacterInitializeManagerDebug;
+import nju.riverxu.ds.model.data.SaveManager;
+import nju.riverxu.ds.model.data.SaveManagerDebug;
 
 public class ManagerFactoryDebug extends ManagerFactory {
     public SaveManager makeSaveManager() {
@@ -19,4 +21,9 @@ public class ManagerFactoryDebug extends ManagerFactory {
     public StatusManager makeStatusManager() {
         return StatusManagerDebug.getInstance();
     }
+
+    public CharacterInitializeManager makeCharacterInitializeManager() {
+        return CharacterInitializeManagerDebug.getInstance();
+    }
+
 }

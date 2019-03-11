@@ -20,6 +20,7 @@ public class MainFrame extends JFrame implements Observer {
     private TourPanel tourPanel = null;
     private LogPanel logPanel = null;
     private UpgradePanel upgradePanel = null;
+    private CharacterInitPanel characterInitPanel = null;
 
     private Game game = null;
 
@@ -28,23 +29,22 @@ public class MainFrame extends JFrame implements Observer {
         setTitle("Dim Souls");
         setSize(800, 800);
         setLocation(100, 100);
+        setResizable(false);
 
 
         game = Game.getInstance();
         game.addObserver(this);
 
-        assert game.getGameStatus() == GameStatus.INITING;
+        assert game.getGameStatus() == GameStatus.GAME_INITING;
         setToInitPanel();
 
         setVisible(true);
-        // addKeyListener(new HeroController());
     }
 
     public void notifyEvent(EventType eventType, Object event) {
         switch (eventType) {
             case GAME_STARTING:
-                setTitle("GAME IS ON");
-                assert game.getGameStatus() != GameStatus.INITING;
+                System.out.println("GAME IS ON--MainFrame");
                 resetPanels();
                 break;
             default:
@@ -53,9 +53,13 @@ public class MainFrame extends JFrame implements Observer {
     }
 
     private void resetPanels() {
+        System.out.println("Reset panels:" + game.getGameStatus());
         switch (game.getGameStatus()) {
-            case INITING:
+            case GAME_INITING:
                 setToInitPanel();
+                break;
+            case CHARACTER_INITING:
+                setToCharacterInitPanel();
                 break;
             case UPGRADE:
                 setToUpgradePanel();
@@ -66,29 +70,43 @@ public class MainFrame extends JFrame implements Observer {
             default:
                 break;
         }
+        repaint();
     }
 
     private void clearPanels() {
-        for (Component c: getComponents()) {
+        for (Component c : getContentPane().getComponents()) {
+            System.out.println(c);
             c.setVisible(false);
             remove(c);
+
         }
     }
 
     private void setToInitPanel() {
         gameInitPanel = new GameInitPanel();
         clearPanels();
-
-        add(gameInitPanel);
+        getContentPane().add(gameInitPanel);
+        gameInitPanel.setVisible(true);
     }
 
     private void setToDungeonPanel() {
         tourPanel = new TourPanel();
-        add(tourPanel);
-        //TODO
+        clearPanels();
+        getContentPane().add(tourPanel);
+        tourPanel.setVisible(true);
     }
 
     private void setToUpgradePanel() {
-        //TODO
+        upgradePanel = new UpgradePanel();
+        clearPanels();
+        getContentPane().add(upgradePanel);
+        upgradePanel.setVisible(true);
+    }
+
+    private void setToCharacterInitPanel() {
+        characterInitPanel = new CharacterInitPanel();
+        clearPanels();
+        getContentPane().add(characterInitPanel);
+        characterInitPanel.setVisible(true);
     }
 }

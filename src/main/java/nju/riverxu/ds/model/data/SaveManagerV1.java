@@ -1,4 +1,4 @@
-package nju.riverxu.ds.model.save;
+package nju.riverxu.ds.model.data;
 
 import nju.riverxu.ds.model.MissionStatus;
 import nju.riverxu.ds.model.spirit.HeroStatus;

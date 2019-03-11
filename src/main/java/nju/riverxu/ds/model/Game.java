@@ -2,7 +2,7 @@ package nju.riverxu.ds.model;
 
 
 import nju.riverxu.ds.controller.GameController;
-import nju.riverxu.ds.model.save.SaveManager;
+import nju.riverxu.ds.model.data.SaveManager;
 import nju.riverxu.ds.model.tour.TourId;
 import nju.riverxu.ds.util.*;
 
@@ -32,7 +32,7 @@ public class Game implements Observable {
     private StatusManager statusManager = null;
     private SaveManager saveManager = null;
 
-    private GameStatus gameStatus = GameStatus.INITING;
+    private GameStatus gameStatus = GameStatus.GAME_INITING;
 
     private Game(){
         //TODO not DEBUG!
@@ -53,9 +53,13 @@ public class Game implements Observable {
     }
 
     public void startGame(boolean withPrevSave) {
-        //TODO
-        notifyAll(EventType.GAME_STARTING, null);
-        gameStatus = GameStatus.UPGRADE;
+        if (withPrevSave) {
+            gameStatus = GameStatus.UPGRADE;
+            notifyAll(EventType.GAME_STARTING, null);
+        } else {
+            gameStatus = GameStatus.CHARACTER_INITING;
+            notifyAll(EventType.GAME_STARTING, null);
+        }
     }
 
 

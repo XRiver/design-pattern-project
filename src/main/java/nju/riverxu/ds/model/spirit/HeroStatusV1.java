@@ -14,7 +14,6 @@ public class HeroStatusV1 implements HeroStatus {
 
     private ItemSuite itemSuite = null;
 
-
     private ArmorSuite armorSuite = null;
     private ConsumableSuite consumableSuite = null;
     private WeaponSuite weaponSuite = null;
@@ -22,7 +21,11 @@ public class HeroStatusV1 implements HeroStatus {
     private int VIT, STR, INT;
 
     public HeroStatusV1() {
+        itemSuite = new ItemSuite();
 
+        armorSuite = new ArmorSuite(null, null);
+        consumableSuite = new ConsumableSuite();
+        weaponSuite = new WeaponSuite(null, null);
     }
 
     public HeroStatusV1(ItemSuite itemSuite, ArmorSuite armorSuite, ConsumableSuite consumableSuite, WeaponSuite weaponSuite) {

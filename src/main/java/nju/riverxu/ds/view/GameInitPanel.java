@@ -29,8 +29,6 @@ public class GameInitPanel extends JPanel {
         scrollPane.setViewportView(options);
         options.setListData(controller.getAvailableOptions());
         options.addListSelectionListener(controller);
-
-        setVisible(true);
     }
 
 

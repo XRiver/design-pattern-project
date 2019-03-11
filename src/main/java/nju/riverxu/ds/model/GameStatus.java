@@ -1,5 +1,5 @@
 package nju.riverxu.ds.model;
 
 public enum GameStatus {
-    INITING, TOUR, UPGRADE
+    GAME_INITING, CHARACTER_INITING, TOUR, UPGRADE
 }

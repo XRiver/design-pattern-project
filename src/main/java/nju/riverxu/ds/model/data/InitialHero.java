@@ -39,12 +39,5 @@ public class InitialHero implements Serializable {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "InitialHero{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", status=" + status +
-                '}';
-    }
+
 }

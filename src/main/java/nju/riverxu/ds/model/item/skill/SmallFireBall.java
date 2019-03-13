@@ -1,8 +1,10 @@
 package nju.riverxu.ds.model.item.skill;
 
 import nju.riverxu.ds.model.item.Skill;
+import nju.riverxu.ds.model.spirit.Hero;
+import nju.riverxu.ds.model.tour.Dungeon;
 
-public class FireEnhanceSkill extends Skill {
+public class SmallFireBall extends Skill {
     public boolean canUpgrade() {
         return false;
     }
@@ -11,7 +13,7 @@ public class FireEnhanceSkill extends Skill {
 
     }
 
-    public void use() {
+    public void use(Dungeon dungeon, Hero hero) {
 
     }
 

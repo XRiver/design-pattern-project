@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 public class ItemSuite implements Serializable {
     private Item[] slots = null;
-    public static int MAX_SLOT = 99;
+    public static final int MAX_SLOT = 99;
+    private int soulCount = 0;
 
     public ItemSuite() {
         slots = new Item[MAX_SLOT];
@@ -22,5 +23,13 @@ public class ItemSuite implements Serializable {
         if (index < MAX_SLOT) {
             slots[index] = i;
         }
+    }
+
+    public int getSoulCount() {
+        return soulCount;
+    }
+
+    public void setSoulCount(int soulCount) {
+        this.soulCount = soulCount;
     }
 }

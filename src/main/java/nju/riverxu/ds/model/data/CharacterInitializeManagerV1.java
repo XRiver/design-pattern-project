@@ -1,5 +1,8 @@
 package nju.riverxu.ds.model.data;
 
+import nju.riverxu.ds.util.ManagerFactory;
+import nju.riverxu.ds.util.ManagerFactoryVersion;
+
 //TODO
 public class CharacterInitializeManagerV1 implements CharacterInitializeManager {
 
@@ -14,6 +17,6 @@ public class CharacterInitializeManagerV1 implements CharacterInitializeManager 
     }
 
     public void useType(InitialHero selected) {
-
+        ManagerFactory.getInstance(ManagerFactoryVersion.V1).makeSaveManager().saveHeroStatus(selected.getStatus());
     }
 }

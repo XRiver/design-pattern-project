@@ -4,7 +4,7 @@ import nju.riverxu.ds.model.item.Weapon;
 import nju.riverxu.ds.model.spirit.Hero;
 import nju.riverxu.ds.model.tour.Dungeon;
 
-public class Fist extends Weapon {
+public class Dagger extends Weapon {
     public boolean canUpgrade() {
         return false;
     }

@@ -1,10 +1,22 @@
 package nju.riverxu.ds.model.tour;
 
+import java.io.Serializable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Tour {
-    private ExecutorService spiritThreadPool = Executors.newCachedThreadPool();
-    private Dungeon current;
+public class Tour implements Serializable {
+    private static ExecutorService spiritThreadPool = Executors.newCachedThreadPool();
+    private transient Dungeon current;
+    private Dungeon[] dungeons;
 
+    private TourId id;
+
+
+    public TourId getId() {
+        return id;
+    }
+
+    public Dungeon getCurrent() {
+        return current;
+    }
 }

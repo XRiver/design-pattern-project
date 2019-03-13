@@ -28,11 +28,11 @@ public class SaveManagerV1 implements SaveManager{
         return null;
     }
 
-    public void saveHeroStatus(HeroStatus saved) {
-
+    public boolean saveHeroStatus(HeroStatus saved) {
+        return false;
     }
 
-    public void saveMissionStatus(MissionStatus saved) {
-
+    public boolean saveMissionStatus(MissionStatus saved) {
+        return false;
     }
 }

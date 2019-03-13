@@ -9,6 +9,6 @@ public interface SaveManager {
 
     HeroStatus loadHeroStatus();
     MissionStatus loadMissionStatus();
-    void saveHeroStatus(HeroStatus saved);
-    void saveMissionStatus(MissionStatus saved);
+    boolean saveHeroStatus(HeroStatus saved);
+    boolean saveMissionStatus(MissionStatus saved);
 }

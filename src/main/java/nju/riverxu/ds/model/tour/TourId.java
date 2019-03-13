@@ -1,14 +1,16 @@
 package nju.riverxu.ds.model.tour;
 
-public class TourId {
+import java.io.Serializable;
+
+public class TourId implements Serializable {
     private int id;
     private String name;
-    private boolean isPlayable;
+    private int[] nextUnlock;
 
-    public TourId(int id, String name, boolean isPlayable) {
+    public TourId(int id, String name, int[] nextUnlock) {
         this.id = id;
         this.name = name;
-        this.isPlayable = isPlayable;
+        this.nextUnlock = nextUnlock;
     }
 
     public int getId() {
@@ -19,7 +21,7 @@ public class TourId {
         return name;
     }
 
-    public boolean isPlayable() {
-        return isPlayable;
+    public int[] getNextUnlock() {
+        return nextUnlock;
     }
 }

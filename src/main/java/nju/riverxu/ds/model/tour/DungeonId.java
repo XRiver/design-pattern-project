@@ -1,6 +1,8 @@
 package nju.riverxu.ds.model.tour;
 
-public class DungeonId {
+import java.io.Serializable;
+
+public class DungeonId implements Serializable {
     private int id;
     private String name;
 

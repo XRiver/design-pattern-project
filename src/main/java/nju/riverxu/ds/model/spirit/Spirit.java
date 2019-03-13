@@ -7,10 +7,8 @@ public abstract class Spirit implements Runnable {
         this.active = active;
     }
     public abstract void act();
-    /*
-    DPHint: TemplateMethod
-     */
 
+    //TODO 下放到Hero与Mob，设置两者不同的响应速度可以节约一点资源？？
     public void run() {
         while(active) {
             act();

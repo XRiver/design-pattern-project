@@ -32,7 +32,7 @@ public class Game implements Observable {
     private StatusManager statusManager = null;
     private SaveManager saveManager = null;
 
-    private GameStatus gameStatus = GameStatus.GAME_INITING;
+    private GameState gameState = GameState.GAME_INITING;
 
     private Game(){
         //TODO not DEBUG!
@@ -54,10 +54,10 @@ public class Game implements Observable {
 
     public void startGame(boolean withPrevSave) {
         if (withPrevSave) {
-            gameStatus = GameStatus.UPGRADE;
+            gameState = GameState.UPGRADE;
             notifyAll(EventType.GAME_STARTING, null);
         } else {
-            gameStatus = GameStatus.CHARACTER_INITING;
+            gameState = GameState.CHARACTER_INITING;
             notifyAll(EventType.GAME_STARTING, null);
         }
     }
@@ -71,14 +71,14 @@ public class Game implements Observable {
         return statusManager;
     }
 
-    public GameStatus getGameStatus() {
-        return gameStatus;
+    public GameState getGameState() {
+        return gameState;
     }
 
 
     public void startTour(TourId id) {
         //TODO delegate to TourManager
-        gameStatus = GameStatus.TOUR;
+        gameState = GameState.TOUR;
     }
 
 

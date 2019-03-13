@@ -1,7 +1,7 @@
 package nju.riverxu.ds.view;
 
 import nju.riverxu.ds.model.Game;
-import nju.riverxu.ds.model.GameStatus;
+import nju.riverxu.ds.model.GameState;
 import nju.riverxu.ds.util.EventType;
 import nju.riverxu.ds.util.Observer;
 
@@ -35,7 +35,7 @@ public class MainFrame extends JFrame implements Observer {
         game = Game.getInstance();
         game.addObserver(this);
 
-        assert game.getGameStatus() == GameStatus.GAME_INITING;
+        assert game.getGameState() == GameState.GAME_INITING;
         setToInitPanel();
 
         setVisible(true);
@@ -53,8 +53,8 @@ public class MainFrame extends JFrame implements Observer {
     }
 
     private void resetPanels() {
-        System.out.println("Reset panels:" + game.getGameStatus());
-        switch (game.getGameStatus()) {
+        System.out.println("Reset panels:" + game.getGameState());
+        switch (game.getGameState()) {
             case GAME_INITING:
                 setToInitPanel();
                 break;

@@ -6,9 +6,7 @@ import nju.riverxu.ds.model.item.ItemSuite;
 import nju.riverxu.ds.model.item.WeaponSuite;
 
 /**
- * TODO
  * 包括物品栏、装备栏在内的各种不易变状态
- * 本类的设计视为游戏核心机制，不会修改需求
  */
 public class HeroStatusV1 implements HeroStatus {
 

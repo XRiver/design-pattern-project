@@ -1,9 +1,9 @@
 package nju.riverxu.ds.model.tour.map;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface DungeonMap {
+public interface DungeonMap extends Serializable {
     List<MapElement> getElements();
-    void loadAllElements(DungeonMap prototype);
-    void addElement(MapElement element);
+    // void addElement(MapElement element);
 }

@@ -2,6 +2,9 @@ package nju.riverxu.ds.model.data;
 
 import nju.riverxu.ds.model.MissionStatus;
 import nju.riverxu.ds.model.spirit.HeroStatus;
+import nju.riverxu.ds.util.SerializeHelper;
+
+import java.io.FileInputStream;
 
 public class SaveManagerDebug implements SaveManager {
     public boolean hasPrevSave() {
@@ -9,19 +12,32 @@ public class SaveManagerDebug implements SaveManager {
         return false;
     }
 
+    private static final String HERO_STATUS_FILENAME = "hero.save";
+    private static final String MISSION_STATUS_FILENAME = "mission.save";
+
     public HeroStatus loadHeroStatus() {
-        return null;
+        Object[] read = SerializeHelper.readAll(HERO_STATUS_FILENAME);
+        if (read!= null) {
+            return (HeroStatus)read[0];
+        } else {
+            return null;
+        }
     }
 
     public MissionStatus loadMissionStatus() {
-        return null;
+        Object[] read = SerializeHelper.readAll(MISSION_STATUS_FILENAME);
+        if (read!= null) {
+            return (MissionStatus)read[0];
+        } else {
+            return null;
+        }
     }
 
-    public void saveHeroStatus(HeroStatus saved) {
-
+    public boolean saveHeroStatus(HeroStatus saved) {
+        return SerializeHelper.writeAll(new Object[]{saved},HERO_STATUS_FILENAME);
     }
 
-    public void saveMissionStatus(MissionStatus saved) {
-
+    public boolean saveMissionStatus(MissionStatus saved) {
+        return SerializeHelper.writeAll(new Object[]{saved},MISSION_STATUS_FILENAME);
     }
 }

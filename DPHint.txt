@@ -1,0 +1,7 @@
+抽象工厂方法：ManagerFactory
+工厂方法： StatusManager->UpgradeManager
+MVC—观察者模式：整体
+单例模式：各种Manager
+策略模式：HeroController允许键位设置
+原型模式：创建多个Mob
+模板方法模式：Spirit的run()

@@ -16,11 +16,7 @@ public class DungeonMapV1 implements DungeonMap {
         return new ArrayList<MapElement>(elements);
     }
 
-    public void loadAllElements(DungeonMap prototype) {
-        elements = new LinkedList<MapElement>(prototype.getElements());
-    }
-
-    public void addElement(MapElement element) {
-        elements.add(element);
-    }
+//    public void addElement(MapElement element) {
+//        elements.add(element);
+//    }
 }

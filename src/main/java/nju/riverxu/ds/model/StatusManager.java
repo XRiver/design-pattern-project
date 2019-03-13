@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface StatusManager extends Observable {
     List<TourId> getTourList();
+    //TODO DPHint: Factory method
+    UpgradeManager getUpgradeManager();
 }

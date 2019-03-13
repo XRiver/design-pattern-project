@@ -1,7 +1,7 @@
 package nju.riverxu.ds.view;
 
 import nju.riverxu.ds.model.Game;
-import nju.riverxu.ds.model.GameStatus;
+import nju.riverxu.ds.model.GameState;
 import nju.riverxu.ds.model.TourManager;
 import nju.riverxu.ds.model.tour.Tour;
 import nju.riverxu.ds.util.EventType;
@@ -31,7 +31,7 @@ public class TourPanel extends JPanel implements Observer {
         setLayout(new BorderLayout(0, 0));
 
 
-        assert game.getGameStatus()== GameStatus.TOUR;
+        assert game.getGameState()== GameState.TOUR;
         tour = tourManager.getCurrentTour();
         //TODO init DungeonPanel, LogPanel and add them to this
 

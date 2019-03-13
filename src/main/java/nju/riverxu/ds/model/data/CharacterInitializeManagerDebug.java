@@ -1,6 +1,5 @@
 package nju.riverxu.ds.model.data;
 
-import com.google.gson.Gson;
 import nju.riverxu.ds.model.item.ArmorSuite;
 import nju.riverxu.ds.model.item.ConsumableSuite;
 import nju.riverxu.ds.model.item.ItemSuite;
@@ -69,6 +68,5 @@ public class CharacterInitializeManagerDebug implements CharacterInitializeManag
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 }

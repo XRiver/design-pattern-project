@@ -26,6 +26,10 @@ public class StatusManagerDebug implements StatusManager {
         return null;
     }
 
+    public UpgradeManager getUpgradeManager() {
+        return null;
+    }
+
 
     private List<Observer> observers = new ArrayList<Observer>();
     public void addObserver(Observer observer) {

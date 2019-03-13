@@ -1,4 +1,6 @@
 package nju.riverxu.ds.model.tour.map;
 
-public interface MapElement {
+import java.io.Serializable;
+
+public interface MapElement extends Serializable {
 }

@@ -1,7 +1,8 @@
 抽象工厂方法：ManagerFactory
 工厂方法： StatusManager->UpgradeManager
-MVC—观察者模式：整体
+MVC模式、观察者模式：整体项目
 单例模式：各种Manager
 策略模式：HeroController允许键位设置
-原型模式：创建多个Mob
+原型模式：从MobInfo创建Mob用于实际运行游戏
 模板方法模式：Spirit的run()
+迭代器：DungeonMap的访问存储信息的几个方法

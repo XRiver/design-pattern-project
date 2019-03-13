@@ -22,6 +22,8 @@ import java.util.List;
  *
  */
 public class Game implements Observable {
+    //TODO not DEBUG!
+    public static final ManagerFactoryVersion VERSION = ManagerFactoryVersion.DEBUG;
 
     private static Game instance = new Game();
     public static Game getInstance() {
@@ -35,8 +37,8 @@ public class Game implements Observable {
     private GameState gameState = GameState.GAME_INITING;
 
     private Game(){
-        //TODO not DEBUG!
-        ManagerFactory mf = ManagerFactory.getInstance(ManagerFactoryVersion.DEBUG);
+
+        ManagerFactory mf = ManagerFactory.getInstance(VERSION);
 
         tourManager = mf.makeTourManager();
         statusManager = mf.makeStatusManager();

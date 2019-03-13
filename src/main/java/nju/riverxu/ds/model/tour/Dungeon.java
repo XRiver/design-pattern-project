@@ -14,13 +14,15 @@ import java.util.List;
 
 public class Dungeon implements Observable,Serializable {
 
+    /**
+     * 只有这两个field会被序列化
+     */
     private DungeonId id;
     private DungeonMap map;
 
     private transient Hero hero = null;
     private transient Location heroLocation = null;
     private transient HashMap<Mob,Location> mobLocationHashMap = null;
-
 
 
 

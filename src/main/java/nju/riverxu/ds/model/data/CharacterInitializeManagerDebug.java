@@ -1,5 +1,7 @@
 package nju.riverxu.ds.model.data;
 
+import nju.riverxu.ds.model.Game;
+import nju.riverxu.ds.model.data.helper.InitTourDataHelper;
 import nju.riverxu.ds.model.item.ArmorSuite;
 import nju.riverxu.ds.model.item.ConsumableSkillSuite;
 import nju.riverxu.ds.model.item.ItemSuite;
@@ -65,7 +67,10 @@ public class CharacterInitializeManagerDebug implements CharacterInitializeManag
     }
 
     public void useType(InitialHero selected) {
-        ManagerFactory.getInstance(ManagerFactoryVersion.DEBUG).makeSaveManager().saveHeroStatus(selected.getStatus());
+        ManagerFactory mf = ManagerFactory.getInstance(Game.VERSION);
+        SaveManager sm = mf.makeSaveManager();
+        sm.saveHeroStatus(selected.getStatus());
+        sm.saveMissionStatus(InitTourDataHelper.initMissionStatus());
     }
 
 }

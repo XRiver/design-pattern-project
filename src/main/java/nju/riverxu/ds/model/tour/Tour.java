@@ -11,6 +11,12 @@ public class Tour implements Serializable {
 
     private TourId id;
 
+    public Tour(Dungeon[] dungeons, TourId id) {
+        this.dungeons = dungeons;
+        this.id = id;
+
+        current = dungeons[0];
+    }
 
     public TourId getId() {
         return id;

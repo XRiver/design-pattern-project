@@ -1,10 +1,7 @@
 package nju.riverxu.ds.model.data;
 
-import nju.riverxu.ds.model.MissionStatus;
 import nju.riverxu.ds.model.spirit.HeroStatus;
 import nju.riverxu.ds.util.SerializeHelper;
-
-import java.io.FileInputStream;
 
 public class SaveManagerDebug implements SaveManager {
     public boolean hasPrevSave() {

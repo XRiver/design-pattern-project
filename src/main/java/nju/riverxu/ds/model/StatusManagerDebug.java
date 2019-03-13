@@ -1,5 +1,6 @@
 package nju.riverxu.ds.model;
 
+import nju.riverxu.ds.model.data.MissionStatus;
 import nju.riverxu.ds.model.spirit.HeroStatus;
 import nju.riverxu.ds.model.tour.TourId;
 import nju.riverxu.ds.util.EventType;

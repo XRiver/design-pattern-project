@@ -24,7 +24,11 @@ public class Dungeon implements Observable,Serializable {
     private transient Location heroLocation = null;
     private transient HashMap<Mob,Location> mobLocationHashMap = null;
 
-
+    public Dungeon(DungeonId id, DungeonMap map) {
+        this.id = id;
+        this.map = map;
+        //TODO init the transient attributes
+    }
 
     public DungeonMap getMap() {
         return map;

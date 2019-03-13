@@ -1,8 +1,10 @@
 package nju.riverxu.ds.model.item.armor.body;
 
 import nju.riverxu.ds.model.item.armor.BodyArmor;
+import nju.riverxu.ds.model.spirit.Hero;
+import nju.riverxu.ds.model.tour.Dungeon;
 
-public class NoBodyArmor extends BodyArmor {
+public class KnightBodyArmor extends BodyArmor {
     public boolean canUpgrade() {
         return false;
     }
@@ -11,7 +13,7 @@ public class NoBodyArmor extends BodyArmor {
 
     }
 
-    public void use() {
+    public void use(Dungeon dungeon, Hero hero) {
 
     }
 

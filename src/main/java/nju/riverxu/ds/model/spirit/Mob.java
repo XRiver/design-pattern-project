@@ -1,7 +1,7 @@
 package nju.riverxu.ds.model.spirit;
 
 
-public class Mob extends Spirit {
+public abstract class Mob extends Spirit {
 
     //TODO What are the mobs' status?
 

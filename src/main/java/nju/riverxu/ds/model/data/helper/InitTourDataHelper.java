@@ -2,11 +2,13 @@ package nju.riverxu.ds.model.data.helper;
 
 import nju.riverxu.ds.model.data.MissionStatus;
 import nju.riverxu.ds.model.data.TourInfo;
+import nju.riverxu.ds.model.spirit.mob.MobSkeleton;
 import nju.riverxu.ds.model.tour.*;
-import nju.riverxu.ds.model.tour.map.DungeonMap;
-import nju.riverxu.ds.model.tour.map.DungeonMapSize;
-import nju.riverxu.ds.model.tour.map.DungeonMapV1;
+import nju.riverxu.ds.model.tour.map.*;
 import nju.riverxu.ds.util.SerializeHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 本类用于生成最初的地图数据；
@@ -30,18 +32,50 @@ public class InitTourDataHelper {
 
         {
             DungeonMapSize size = new DungeonMapSize(600,600);
-            Location location = new Location(150,150);
-            //TODO Walls, exits...... Mobs...
-            DungeonMap map = null;
+
+            List<MapElement> elements = new ArrayList<MapElement>();
+            // Walls
+            elements.add(new Wall(new Location(100,100), new Location(100,200), true));
+            elements.add(new Wall(new Location(100,100), new Location(300,100), true));
+            elements.add(new Wall(new Location(300,0), new Location(300,100), true));
+            elements.add(new Wall(new Location(0,200), new Location(200,200), true));
+            elements.add(new Wall(new Location(0,300), new Location(200,300), true));
+            elements.add(new Wall(new Location(200,300), new Location(200,500), true));
+            elements.add(new Wall(new Location(200,400), new Location(300,400), false));//SPECIAL
+            elements.add(new Wall(new Location(200,500), new Location(300,500), true));
+            elements.add(new Wall(new Location(300,300), new Location(300,500), true));
+            elements.add(new Wall(new Location(300,200), new Location(400,300), true));
+            elements.add(new Wall(new Location(300,300), new Location(400,400), true));
+            elements.add(new Wall(new Location(400,0), new Location(400,300), true));
+            elements.add(new Wall(new Location(500,100), new Location(600,100), true));
+            elements.add(new Wall(new Location(400,400), new Location(400,500), true));
+            elements.add(new Wall(new Location(400,500), new Location(500,500), true));
+            elements.add(new Wall(new Location(500,100), new Location(500,500), true));
+            // Exits
+            elements.add(new Exit(1, new Location(10,250), Exit.LEAVE_TOUR));
+            elements.add(new Exit(2, new Location(250,450), Exit.COMPLETE_TOUR));
+            elements.add(new Exit(3, new Location(550,50), 4));
+
+            List<MobInfo> mobInfoList = new ArrayList<MobInfo>();
+            mobInfoList.add(new MobInfo(new MobSkeleton(), new Location(70,250)));
+            mobInfoList.add(new MobInfo(new MobSkeleton(), new Location(450, 350)));
+            mobInfoList.add(new MobInfo(new MobSkeleton(), new Location(450,50)));
+
+            Location heroLocation = new Location(150,150);
+
+            DungeonMap map = new DungeonMapV1(elements, mobInfoList, heroLocation,size);
             Dungeon d = new Dungeon(new DungeonId(1,"不死聚落上层"),map);
 
             dungeons[0] = d;
         }
 
         {
-            DungeonMap map = null;
-            //TODO
-            Dungeon d = new Dungeon(new DungeonId(1,"监视塔"), map);;
+            DungeonMapSize size = new DungeonMapSize(600,600);
+            List<MapElement> elements = new ArrayList<MapElement>();
+            elements.add(new Exit(4, new Location(100,100), 3));
+            elements.add(new Exit(5, new Location(200,200), Exit.COMPLETE_TOUR));
+            DungeonMap map = new DungeonMapV1(elements, new ArrayList<MobInfo>(), null,size);
+            Dungeon d = new Dungeon(new DungeonId(2,"监视塔"), map);;
             dungeons[1] = d;
         }
 
@@ -53,8 +87,12 @@ public class InitTourDataHelper {
         Dungeon[] dungeons = new Dungeon[1];
 
         {//D1
-            DungeonMap map = null;
-            //TODO
+            DungeonMapSize size = new DungeonMapSize(600,600);
+            Location heroLocation = new Location(150,150);
+            List<MapElement> elements = new ArrayList<MapElement>();
+            elements.add(new Exit(1, new Location(200,200), Exit.COMPLETE_TOUR));
+            DungeonMap map = new DungeonMapV1(elements, new ArrayList<MobInfo>(), heroLocation,size);
+
             Dungeon d = new Dungeon(new DungeonId(1,"太阳祭坛"),map);
 
             dungeons[0] = d;

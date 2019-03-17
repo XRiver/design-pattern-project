@@ -30,19 +30,25 @@ public class Game implements Observable {
         return instance;
     }
 
+    private ManagerFactory managerFactory = null;
+
     private TourManager tourManager = null;
     private StatusManager statusManager = null;
     private SaveManager saveManager = null;
+
+    public ManagerFactory getManagerFactory() {
+        return managerFactory;
+    }
 
     private GameState gameState = GameState.GAME_INITING;
 
     private Game(){
 
-        ManagerFactory mf = ManagerFactory.getInstance(VERSION);
+        managerFactory = ManagerFactory.getInstance(VERSION);
 
-        tourManager = mf.makeTourManager();
-        statusManager = mf.makeStatusManager();
-        saveManager = mf.makeSaveManager();
+        tourManager = managerFactory.makeTourManager();
+        statusManager = managerFactory.makeStatusManager();
+        saveManager = managerFactory.makeSaveManager();
 
     }
 
@@ -56,6 +62,8 @@ public class Game implements Observable {
 
     public void startGame(boolean withPrevSave) {
         if (withPrevSave) {
+            assert saveManager.hasPrevSave();
+
             gameState = GameState.UPGRADE;
             notifyAll(EventType.GAME_STARTING, null);
         } else {

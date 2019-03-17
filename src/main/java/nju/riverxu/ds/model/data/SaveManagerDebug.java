@@ -3,10 +3,14 @@ package nju.riverxu.ds.model.data;
 import nju.riverxu.ds.model.spirit.HeroStatus;
 import nju.riverxu.ds.util.SerializeHelper;
 
+import java.io.File;
+
 public class SaveManagerDebug implements SaveManager {
     public boolean hasPrevSave() {
-        System.out.println("We don't have a previous save!");
-        return false;
+        File f1 = new File(HERO_STATUS_FILENAME);
+        File f2 = new File(MISSION_STATUS_FILENAME);
+
+        return f1.exists() && f2.exists();
     }
 
     private static final String HERO_STATUS_FILENAME = "hero.save";

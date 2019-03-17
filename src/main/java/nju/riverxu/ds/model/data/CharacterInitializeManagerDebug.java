@@ -1,5 +1,6 @@
 package nju.riverxu.ds.model.data;
 
+import nju.riverxu.ds.controller.CharacterInitController;
 import nju.riverxu.ds.model.Game;
 import nju.riverxu.ds.model.data.helper.InitTourDataHelper;
 import nju.riverxu.ds.model.item.ArmorSuite;

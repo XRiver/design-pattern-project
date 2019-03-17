@@ -1,6 +1,8 @@
 package nju.riverxu.ds.model.spirit;
 
-public abstract class Spirit implements Runnable {
+import java.io.Serializable;
+
+public abstract class Spirit implements Runnable, Serializable {
 
     protected boolean active = true;
     public void setActive(boolean active) {

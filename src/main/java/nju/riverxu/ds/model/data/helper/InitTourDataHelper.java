@@ -101,16 +101,18 @@ public class InitTourDataHelper {
         return new Tour(dungeons, new TourId(1,"城外不死教区", new int[]{2}));
     }
 
-
-    public static void main(String[] args) {
+    public static void createTourData() {
         /*
-        生成两个Tour：1与2，1能解锁2
-        TODO int id为i的Tour，文件生成命名为"tour{{i}}.data"
+        int id为i的Tour，文件生成命名为"tour{{i}}.data"
          */
         boolean ret1 = SerializeHelper.writeAll(new Object[]{makeTour1()}, "tour1.data");
         boolean ret2 = SerializeHelper.writeAll(new Object[]{makeTour2()}, "tour2.data");
 
-        System.out.println("tour1 make&write:"+ret1);
-        System.out.println("tour2 make&write:"+ret2);
+        System.out.println("InitTourDataHelper: tour1 make&write "+ret1);
+        System.out.println("InitTourDataHelper: tour2 make&write "+ret2);
+    }
+
+    public static void main(String[] args) {
+        createTourData();
     }
 }

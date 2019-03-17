@@ -1,5 +1,6 @@
 package nju.riverxu.ds.model.data;
 
+import nju.riverxu.ds.controller.CharacterInitController;
 import nju.riverxu.ds.util.ManagerFactory;
 import nju.riverxu.ds.util.ManagerFactoryVersion;
 

@@ -44,7 +44,7 @@ public class MainFrame extends JFrame implements Observer {
     public void notifyEvent(EventType eventType, Object event) {
         switch (eventType) {
             case GAME_STARTING:
-                System.out.println("GAME IS ON--MainFrame");
+                System.out.println("MainFrame: GAME_STARTING");
                 resetPanels();
                 break;
             default:
@@ -56,12 +56,15 @@ public class MainFrame extends JFrame implements Observer {
         System.out.println("Reset panels:" + game.getGameState());
         switch (game.getGameState()) {
             case GAME_INITING:
+                System.out.println("MainFrame: Setting to GAME_INIT panel.");
                 setToInitPanel();
                 break;
             case CHARACTER_INITING:
+                System.out.println("MainFrame: Setting to CHARACTER_INIT panel.");
                 setToCharacterInitPanel();
                 break;
             case UPGRADE:
+                System.out.println("MainFrame: Setting to UPGRADE panel.");
                 setToUpgradePanel();
                 break;
             case TOUR:

@@ -8,4 +8,7 @@ public class UpgradePanel extends JPanel {
     // 可升级武器、护甲
     // 已经解锁的下一次Tour列表（开始冒险）
 
+    public UpgradePanel() {
+        add(new JLabel("UPGRADE"));
+    }
 }

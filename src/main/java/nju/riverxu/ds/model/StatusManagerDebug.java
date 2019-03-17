@@ -1,7 +1,7 @@
 package nju.riverxu.ds.model;
 
 import nju.riverxu.ds.model.data.MissionStatus;
-import nju.riverxu.ds.model.spirit.HeroStatus;
+import nju.riverxu.ds.model.data.SaveManager;
 import nju.riverxu.ds.model.tour.TourId;
 import nju.riverxu.ds.util.EventType;
 import nju.riverxu.ds.util.Observer;
@@ -15,20 +15,33 @@ public class StatusManagerDebug implements StatusManager {
         return instance;
     }
 
+    private Game game = null;
+    private UpgradeManager upgradeManager = null;
+
     private StatusManagerDebug() {
-        //TODO
+        game = Game.getInstance();
+        tryLoadMissionStatus();
     }
 
-    private HeroStatus heroStatus;
+    private void tryLoadMissionStatus() {
+        SaveManager saveManager = game.getManagerFactory().makeSaveManager();
+        if(missionStatus==null && saveManager.hasPrevSave()) {
+            missionStatus = saveManager.loadMissionStatus();
+        }
+    }
 
     private MissionStatus missionStatus;
 
-    public List<TourId> getTourList() {
-        return null;
+    public TourId[] getTourList() {
+        return missionStatus.getTourIdArray();
     }
 
     public UpgradeManager getUpgradeManager() {
-        return null;
+        if (upgradeManager==null) {
+            upgradeManager = game.getManagerFactory().makeUpgradeManager();
+        }
+
+        return upgradeManager;
     }
 
 

@@ -1,7 +1,7 @@
 package nju.riverxu.ds.model.tour;
 
-import nju.riverxu.ds.model.spirit.Hero;
-import nju.riverxu.ds.model.spirit.Mob;
+import nju.riverxu.ds.model.spirit.hero.Hero;
+import nju.riverxu.ds.model.spirit.mob.Mob;
 import nju.riverxu.ds.model.tour.map.DungeonMap;
 import nju.riverxu.ds.util.EventType;
 import nju.riverxu.ds.util.Observable;

@@ -1,6 +1,6 @@
 package nju.riverxu.ds.model.tour.map;
 
-import nju.riverxu.ds.model.spirit.Mob;
+import nju.riverxu.ds.model.spirit.mob.Mob;
 import nju.riverxu.ds.model.tour.Location;
 
 import java.io.Serializable;

@@ -45,11 +45,7 @@ public class Game implements Observable {
     private Game(){
 
         managerFactory = ManagerFactory.getInstance(VERSION);
-
-        tourManager = managerFactory.makeTourManager();
-        statusManager = managerFactory.makeStatusManager();
         saveManager = managerFactory.makeSaveManager();
-
     }
 
     public GameController getGameController() {
@@ -74,10 +70,16 @@ public class Game implements Observable {
 
 
     public TourManager getTourManager() {
+        if(tourManager==null) {
+            tourManager = managerFactory.makeTourManager();
+        }
         return tourManager;
     }
 
     public StatusManager getStatusManager() {
+        if(statusManager==null) {
+            statusManager = managerFactory.makeStatusManager();
+        }
         return statusManager;
     }
 

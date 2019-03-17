@@ -39,15 +39,15 @@ public class GameController implements ListSelectionListener {
             String selected = (String) list.getSelectedValue();
 
             if("继续游戏".equals(selected)) {
-                System.out.println("Starting old game--GameController");
+                System.out.println("GameController: Starting old game.");
                 game.startGame(true);
             } else if ("开始新游戏".equals(selected)) {
-                System.out.println("Starting new game--GameController");
+                System.out.println("GameController: Starting new game");
                 game.startGame(false);
             } else if ("查看说明".equals(selected)) {
-                System.out.println("Show tutorial--GameController--Not implemented yet");
+                System.out.println("GameController: Show tutorial--Not implemented yet");
             } else if ("退出".equals(selected)) {
-                System.out.println("Exiting--GameController");
+                System.out.println("GameController: Exiting");
                 System.exit(0);
             }
         }

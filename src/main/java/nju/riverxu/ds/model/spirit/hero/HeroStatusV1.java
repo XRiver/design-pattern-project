@@ -1,4 +1,4 @@
-package nju.riverxu.ds.model.spirit;
+package nju.riverxu.ds.model.spirit.hero;
 
 import nju.riverxu.ds.model.item.ArmorSuite;
 import nju.riverxu.ds.model.item.ConsumableSkillSuite;
@@ -79,5 +79,19 @@ public class HeroStatusV1 implements HeroStatus {
                 level = attr;
                 break;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "英雄状态V1{" +
+                "\n物品栏=" + itemSuite +
+                ", \n护甲=" + armorSuite +
+                ", \n消耗品与法术=" + consumableSkillSuite +
+                ", \n武器=" + weaponSuite +
+                ", VIT=" + VIT +
+                ", STR=" + STR +
+                ", INT=" + INT +
+                ", level=" + level +
+                '}';
     }
 }

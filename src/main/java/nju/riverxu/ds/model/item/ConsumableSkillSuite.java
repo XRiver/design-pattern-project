@@ -2,6 +2,7 @@ package nju.riverxu.ds.model.item;
 
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class ConsumableSkillSuite implements Serializable {
     private Consumable[] consumables = null;
@@ -43,4 +44,40 @@ public class ConsumableSkillSuite implements Serializable {
         }
     }
 
+    public Consumable[] getConsumableArray() {
+        return consumables;
+    }
+
+    public Skill[] getSkillArray() {
+        return skills;
+    }
+
+
+    private String getAvailableConsumables() {
+        StringBuilder sb = new StringBuilder();
+        for(Consumable c: consumables) {
+            if(c!= null) {
+                sb.append(c.getName()+" ");
+            }
+        }
+        return sb.toString();
+    }
+
+    private String getAvailableSkills() {
+        StringBuilder sb = new StringBuilder();
+        for(Skill s:skills) {
+            if(s!=null) {
+                sb.append(s.getName()+" ");
+            }
+        }
+        return sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        return "消耗品与法术套装{" +
+                "消耗品=" + getAvailableConsumables() +
+                ", 法术=" + getAvailableSkills() +
+                '}';
+    }
 }

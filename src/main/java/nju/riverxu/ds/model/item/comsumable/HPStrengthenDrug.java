@@ -1,7 +1,7 @@
 package nju.riverxu.ds.model.item.comsumable;
 
 import nju.riverxu.ds.model.item.Consumable;
-import nju.riverxu.ds.model.spirit.Hero;
+import nju.riverxu.ds.model.spirit.hero.Hero;
 import nju.riverxu.ds.model.tour.Dungeon;
 
 public class HPStrengthenDrug extends Consumable {

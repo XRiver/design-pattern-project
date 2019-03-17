@@ -1,6 +1,7 @@
 package nju.riverxu.ds.model.item;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class ItemSuite implements Serializable {
     private Item[] slots = null;
@@ -31,5 +32,27 @@ public class ItemSuite implements Serializable {
 
     public void setSoulCount(int soulCount) {
         this.soulCount = soulCount;
+    }
+
+    public Item[] getArray() {
+        return slots;
+    }
+
+    private String availableItems() {
+        StringBuilder sb = new StringBuilder();
+        for(Item i:slots) {
+            if (i!= null) {
+                sb.append(i.getName()+"  ");
+            }
+        }
+        return sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        return "物品栏{" +
+                "可用物品=" + availableItems() +
+                ", 灵魂量=" + soulCount +
+                '}';
     }
 }

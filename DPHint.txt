@@ -6,3 +6,4 @@ MVC模式、观察者模式：整体项目
 原型模式：从MobInfo创建Mob用于实际运行游戏
 模板方法模式：Spirit的run()
 迭代器：DungeonMap的访问存储信息的几个方法
+享元模式：不创建许多new ItemUpgradeInfo(false,this,0)而是使用ItemCantUpgradeInfo.getInstance()--简单无享元池

@@ -1,5 +1,7 @@
-package nju.riverxu.ds.model.spirit;
+package nju.riverxu.ds.model.spirit.mob;
 
+
+import nju.riverxu.ds.model.spirit.Spirit;
 
 public abstract class Mob extends Spirit {
 

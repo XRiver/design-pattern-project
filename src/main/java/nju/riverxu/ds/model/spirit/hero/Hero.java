@@ -1,6 +1,7 @@
-package nju.riverxu.ds.model.spirit;
+package nju.riverxu.ds.model.spirit.hero;
 
 
+import nju.riverxu.ds.model.spirit.Spirit;
 import nju.riverxu.ds.model.tour.Tour;
 
 public class Hero extends Spirit {

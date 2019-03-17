@@ -1,4 +1,4 @@
-package nju.riverxu.ds.model.spirit;
+package nju.riverxu.ds.model.spirit.hero;
 
 import nju.riverxu.ds.model.item.ArmorSuite;
 import nju.riverxu.ds.model.item.ConsumableSkillSuite;
@@ -19,4 +19,5 @@ public interface HeroStatus extends Serializable {
     int getAttr(StatusType type);
 
     void setAttr(StatusType type, int attr);
+
 }

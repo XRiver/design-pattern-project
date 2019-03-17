@@ -1,9 +1,6 @@
 package nju.riverxu.ds.util;
 
-import nju.riverxu.ds.model.StatusManager;
-import nju.riverxu.ds.model.StatusManagerV1;
-import nju.riverxu.ds.model.TourManager;
-import nju.riverxu.ds.model.TourManagerV1;
+import nju.riverxu.ds.model.*;
 import nju.riverxu.ds.model.data.*;
 
 public class ManagerFactoryV1 extends ManagerFactory {
@@ -25,6 +22,10 @@ public class ManagerFactoryV1 extends ManagerFactory {
 
     public MapDataManager makeMapDataManager() {
         return MapDataManagerV1.getInstance();
+    }
+
+    public UpgradeManager makeUpgradeManager() {
+        return null;
     }
 
 

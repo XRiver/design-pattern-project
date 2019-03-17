@@ -20,7 +20,7 @@ public class MissionStatus implements Serializable {
         this.infoArray = infoArray;
     }
 
-    public TourId[] getTourIdList() {
+    public TourId[] getTourIdArray() {
         return tourIdArray;
     }
 

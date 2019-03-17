@@ -1,6 +1,6 @@
 package nju.riverxu.ds.model.data;
 
-import nju.riverxu.ds.model.spirit.HeroStatus;
+import nju.riverxu.ds.model.spirit.hero.HeroStatus;
 
 /**
  * 简单的存档管理,使用json序列化相关对象作为字符串文件存在固定位置

@@ -18,7 +18,6 @@ public class MainFrame extends JFrame implements Observer {
 
     private GameInitPanel gameInitPanel = null;
     private TourPanel tourPanel = null;
-    private LogPanel logPanel = null;
     private UpgradePanel upgradePanel = null;
     private CharacterInitPanel characterInitPanel = null;
 
@@ -78,10 +77,8 @@ public class MainFrame extends JFrame implements Observer {
 
     private void clearPanels() {
         for (Component c : getContentPane().getComponents()) {
-            System.out.println(c);
             c.setVisible(false);
             remove(c);
-
         }
     }
 

@@ -1,9 +1,6 @@
 package nju.riverxu.ds.util;
 
-import nju.riverxu.ds.model.StatusManager;
-import nju.riverxu.ds.model.StatusManagerDebug;
-import nju.riverxu.ds.model.TourManager;
-import nju.riverxu.ds.model.TourManagerDebug;
+import nju.riverxu.ds.model.*;
 import nju.riverxu.ds.model.data.*;
 
 public class ManagerFactoryDebug extends ManagerFactory {
@@ -25,6 +22,10 @@ public class ManagerFactoryDebug extends ManagerFactory {
 
     public MapDataManager makeMapDataManager() {
         return MapDataManagerDebug.getInstance();
+    }
+
+    public UpgradeManager makeUpgradeManager() {
+        return UpgradeManagerDebug.getInstance();
     }
 
 }

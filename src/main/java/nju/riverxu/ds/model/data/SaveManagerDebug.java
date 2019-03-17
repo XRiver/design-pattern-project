@@ -1,6 +1,6 @@
 package nju.riverxu.ds.model.data;
 
-import nju.riverxu.ds.model.spirit.HeroStatus;
+import nju.riverxu.ds.model.spirit.hero.HeroStatus;
 import nju.riverxu.ds.util.SerializeHelper;
 
 import java.io.File;

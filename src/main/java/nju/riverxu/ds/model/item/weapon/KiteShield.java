@@ -1,26 +1,29 @@
 package nju.riverxu.ds.model.item.weapon;
 
-import nju.riverxu.ds.model.spirit.Hero;
+import nju.riverxu.ds.model.item.ItemUpgradeInfo;
+import nju.riverxu.ds.model.spirit.hero.Hero;
 import nju.riverxu.ds.model.tour.Dungeon;
 
 public class KiteShield extends Shield {
-    public boolean canUpgrade() {
-        return false;
-    }
 
-    public void upgrade() {
-
-    }
 
     public void use(Dungeon dungeon, Hero hero) {
 
     }
 
     public String getName() {
-        return null;
+        return "鸢形盾";
     }
 
     public double getWeight() {
         return 0;
+    }
+
+    public ItemUpgradeInfo getUpgradeInfo() {
+        return new ItemUpgradeInfo(true,this,1500);
+    }
+
+    public boolean upgrade() {
+        return false;
     }
 }

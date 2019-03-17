@@ -1,6 +1,5 @@
 package nju.riverxu.ds.model.data;
 
-import nju.riverxu.ds.controller.CharacterInitController;
 import nju.riverxu.ds.model.Game;
 import nju.riverxu.ds.model.data.helper.InitTourDataHelper;
 import nju.riverxu.ds.model.item.ArmorSuite;
@@ -12,11 +11,10 @@ import nju.riverxu.ds.model.item.armor.body.Shirt;
 import nju.riverxu.ds.model.item.armor.head.KnightHelmet;
 import nju.riverxu.ds.model.item.skill.SmallFireBall;
 import nju.riverxu.ds.model.item.weapon.*;
-import nju.riverxu.ds.model.spirit.HeroStatus;
-import nju.riverxu.ds.model.spirit.HeroStatusV1;
-import nju.riverxu.ds.model.spirit.StatusType;
+import nju.riverxu.ds.model.spirit.hero.HeroStatus;
+import nju.riverxu.ds.model.spirit.hero.HeroStatusV1;
+import nju.riverxu.ds.model.spirit.hero.StatusType;
 import nju.riverxu.ds.util.ManagerFactory;
-import nju.riverxu.ds.util.ManagerFactoryVersion;
 
 
 public class CharacterInitializeManagerDebug implements CharacterInitializeManager {
@@ -58,8 +56,14 @@ public class CharacterInitializeManagerDebug implements CharacterInitializeManag
         beggarStatus.setAttr(StatusType.STR,10);
         beggarStatus.setAttr(StatusType.VIT,10);
         beggarStatus.setAttr(StatusType.INT,10);
-        beggarStatus.setAttr(StatusType.LEVEL,10);
+        beggarStatus.setAttr(StatusType.LEVEL,20);
+
+
+        //TODO dubug!
+        beggarStatus.getItemSuite().setSoulCount(5000);
+
         beggar.setStatus(beggarStatus);
+
         initTypes[2] = beggar;
     }
 

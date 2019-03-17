@@ -28,7 +28,12 @@ public class ArmorSuite implements Serializable {
     }
 
     public void setHelmet(Helmet helmetSlot) {
-        this.helmetSlot = helmetSlot;
+        if(helmetSlot != null) {
+            this.helmetSlot = helmetSlot;
+        } else {
+            this.helmetSlot = new NoHelmet();
+        }
+
     }
 
     public BodyArmor getBodyArmor() {
@@ -36,6 +41,39 @@ public class ArmorSuite implements Serializable {
     }
 
     public void setBodyArmor(BodyArmor bodyArmorSlot) {
-        this.bodyArmorSlot = bodyArmorSlot;
+        if(bodyArmorSlot!= null) {
+            this.bodyArmorSlot = bodyArmorSlot;
+        } else {
+            this.bodyArmorSlot = new NoBodyArmor();
+        }
+    }
+
+    public Armor get(int slot) {
+        if(slot==0) {
+            return helmetSlot;
+        } else if (slot==1) {
+            return bodyArmorSlot;
+        }
+        return null;
+    }
+
+    public void set(int slot, Armor item) {
+        if(slot==0) {
+            setHelmet((Helmet) item);
+        } else if (slot==1) {
+            setBodyArmor((BodyArmor) item);
+        }
+    }
+
+    public Armor[] getArray() {
+        return new Armor[]{helmetSlot,bodyArmorSlot};
+    }
+
+    @Override
+    public String toString() {
+        return "护甲套装{" +
+                "头部=" + helmetSlot.getName() +
+                ", 身体=" + bodyArmorSlot.getName() +
+                '}';
     }
 }

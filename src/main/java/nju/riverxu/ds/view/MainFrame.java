@@ -67,6 +67,7 @@ public class MainFrame extends JFrame implements Observer {
                 setToUpgradePanel();
                 break;
             case TOUR:
+                System.out.println("MainFrame: Setting to TOUR panel.");
                 setToDungeonPanel();
                 break;
             default:

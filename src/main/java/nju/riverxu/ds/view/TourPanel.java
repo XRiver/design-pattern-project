@@ -42,7 +42,7 @@ public class TourPanel extends JPanel implements Observer {
         add(logPanel, BorderLayout.EAST);
 
         // Listen to events that dungeon changes.
-        tourManager.addObserver(this);
+        tour.addObserver(this);
 
         setVisible(true);
     }
@@ -51,7 +51,7 @@ public class TourPanel extends JPanel implements Observer {
     public void notifyEvent(EventType eventType, Object event) {
         switch (eventType) {
             case TOUR_END:
-                tourManager.removeObserver(this);
+                tour.removeObserver(this);
                 System.out.println("TourPanel: Removing TourPanel from TourManager's observer list.");
                 break;
             //TODO

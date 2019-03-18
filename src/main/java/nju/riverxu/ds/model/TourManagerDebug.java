@@ -19,35 +19,27 @@ public class TourManagerDebug implements TourManager {
     private Tour current = null;
 
     private TourManagerDebug(){
-        //TODO
+        //好像没什么需要初始化的
     }
 
     public void startNewTour(StatusManager statusManager, TourId tourId) {
-
+        current = new Tour(tourId, statusManager);
+        current.start();
     }
 
-    public TourController getHeroController() {
-        return null;
+    public TourController getTourController() {
+        if(current!=null) {
+            if(!current.isRunning()) {
+                current.start();
+            }
+            return new TourController(current);
+        } else {
+            return null;
+        }
     }
 
     public Tour getCurrentTour() {
         return current;
     }
 
-    private List<Observer> observers = new ArrayList<Observer>();
-    public void addObserver(Observer observer) {
-        if(!observers.contains(observer)){
-            observers.add(observer);
-        }
-    }
-
-    public void removeObserver(Observer observer) {
-        observers.remove(observer);
-    }
-
-    public void notifyAll(EventType eventType, Object event) {
-        for(Observer ob: observers) {
-            ob.notifyEvent(eventType, event);
-        }
-    }
 }

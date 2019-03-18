@@ -17,9 +17,7 @@ import java.util.List;
  * 由于某些Controller所控制的model对象在游戏过程中会动态创建、删除、替换的，
  * 所以在需要时，View要从本类获取新的Controller(Listener)
  *
- * Game为GameController所操纵的model，可以“开始游戏”、“启动某关卡”等
- *
- *
+ * Game为GameController所操纵的model，可以“开始游戏”
  */
 public class Game implements Observable {
     //TODO not DEBUG!
@@ -89,8 +87,8 @@ public class Game implements Observable {
 
 
     public void startTour(TourId id) {
-        //TODO delegate to TourManager
-
+        //delegate to TourManager
+        getTourManager().startNewTour(getStatusManager(), id);
         // Tell view that tour is starting
         gameState = GameState.TOUR;
         notifyAll(EventType.GAME_STARTING, null);

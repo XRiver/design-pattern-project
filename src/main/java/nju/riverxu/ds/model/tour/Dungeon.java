@@ -24,10 +24,11 @@ public class Dungeon implements Observable,Serializable {
     private transient Location heroLocation = null;
     private transient HashMap<Mob,Location> mobLocationHashMap = null;
 
+    private transient Tour tour = null;
+
     public Dungeon(DungeonId id, DungeonMap map) {
         this.id = id;
         this.map = map;
-        //TODO init the transient attributes
     }
 
     public DungeonMap getMap() {
@@ -36,6 +37,31 @@ public class Dungeon implements Observable,Serializable {
 
     public DungeonId getId() {
         return id;
+    }
+
+
+    public void setHero(Hero hero) {
+        this.hero = hero;
+    }
+
+    public void setTour(Tour tour) {
+        this.tour = tour;
+    }
+
+    public void setHeroLocation(Location heroLocation) {
+        this.heroLocation = heroLocation;
+    }
+
+    /**
+     *
+     */
+    public void start() {
+        //TODO 启动除了英雄以外的Spirit，也就是Mob；Hero由Tour负责启动
+    }
+
+    private boolean isRunning = false;
+    public boolean isRunning() {
+        return isRunning;
     }
 
 

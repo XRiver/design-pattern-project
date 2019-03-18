@@ -7,3 +7,4 @@ MVC模式、观察者模式：整体项目
 模板方法模式：Spirit的run()
 迭代器：DungeonMap的访问存储信息的几个方法
 享元模式：不创建许多new ItemUpgradeInfo(false,this,0)而是使用ItemCantUpgradeInfo.getInstance()--简单无享元池
+facade/proxy/delegate? :Game.startTour作为外层，为TourManager代理了请求，实际使用TourManager的功能

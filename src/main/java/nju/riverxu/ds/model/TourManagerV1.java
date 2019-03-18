@@ -26,7 +26,7 @@ public class TourManagerV1 implements TourManager {
 
     }
 
-    public TourController getHeroController() {
+    public TourController getTourController() {
         return null;
     }
 
@@ -34,20 +34,4 @@ public class TourManagerV1 implements TourManager {
         return current;
     }
 
-    private List<Observer> observers = new ArrayList<Observer>();
-    public void addObserver(Observer observer) {
-        if(!observers.contains(observer)){
-            observers.add(observer);
-        }
-    }
-
-    public void removeObserver(Observer observer) {
-        observers.remove(observer);
-    }
-
-    public void notifyAll(EventType eventType, Object event) {
-        for(Observer ob: observers) {
-            ob.notifyEvent(eventType, event);
-        }
-    }
 }

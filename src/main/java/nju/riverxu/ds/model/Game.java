@@ -90,7 +90,10 @@ public class Game implements Observable {
 
     public void startTour(TourId id) {
         //TODO delegate to TourManager
+
+        // Tell view that tour is starting
         gameState = GameState.TOUR;
+        notifyAll(EventType.GAME_STARTING, null);
     }
 
 

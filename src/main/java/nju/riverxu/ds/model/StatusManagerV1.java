@@ -24,12 +24,16 @@ public class StatusManagerV1 implements StatusManager {
 
     private MissionStatus missionStatus;
 
-    public TourId[] getTourList() {
+    public TourId[] getTourIds() {
         return null;
     }
 
     public UpgradeManager getUpgradeManager() {
         return null;
+    }
+
+    public TourId[] getUnlockedTourIds() {
+        return new TourId[0];
     }
 
 

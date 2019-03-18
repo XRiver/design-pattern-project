@@ -7,6 +7,7 @@ import nju.riverxu.ds.util.EventType;
 import nju.riverxu.ds.util.Observer;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class StatusManagerDebug implements StatusManager {
@@ -32,7 +33,8 @@ public class StatusManagerDebug implements StatusManager {
 
     private MissionStatus missionStatus;
 
-    public TourId[] getTourList() {
+    public TourId[] getTourIds() {
+        tryLoadMissionStatus();
         return missionStatus.getTourIdArray();
     }
 
@@ -42,6 +44,17 @@ public class StatusManagerDebug implements StatusManager {
         }
 
         return upgradeManager;
+    }
+
+    public TourId[] getUnlockedTourIds() {
+        tryLoadMissionStatus();
+        List<TourId> unlocked = new LinkedList<TourId>();
+        for(int i=0;i<missionStatus.getTourIdArray().length;i++) {
+            if(missionStatus.getInfoArray()[i].isUnlocked()) {
+                unlocked.add(missionStatus.getTourIdArray()[i]);
+            }
+        }
+        return unlocked.toArray(new TourId[0]);
     }
 
 

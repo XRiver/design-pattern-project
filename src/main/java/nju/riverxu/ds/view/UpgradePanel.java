@@ -24,6 +24,8 @@ public class UpgradePanel extends JPanel implements Observer {
     private UpgradeManager upgradeManager = null;
     private UpgradeController controller = null;
 
+    private JLabel hintLabel = null;
+
     private JList attrUpgradeList = null;
     private JList itemUpgradeList = null;
 
@@ -34,7 +36,7 @@ public class UpgradePanel extends JPanel implements Observer {
         add(new JLabel("UPGRADE"));
 
         game = Game.getInstance();
-        assert game.getGameState()== GameState.UPGRADE;
+        assert game.getGameState() == GameState.UPGRADE;
 
         statusManager = game.getStatusManager();
         upgradeManager = statusManager.getUpgradeManager();
@@ -46,52 +48,67 @@ public class UpgradePanel extends JPanel implements Observer {
         setBorder(new EmptyBorder(5, 5, 5, 5));
         setLayout(new BorderLayout(0, 0));
 
-        JLabel hintLabel = new JLabel("请选择欲升级的项目：（再次点击条目或单击列表空白处以确认）");
+        hintLabel = new JLabel("请选择欲升级的项目：（再次点击条目或单击列表空白处以确认）");
         add(hintLabel, BorderLayout.NORTH);
 
-        UpgradeInfo upgradeInfo = upgradeManager.getUpgradeInfo();
+        //UpgradeInfo upgradeInfo = upgradeManager.getUpgradeInfo();
 
         JScrollPane attrScrollPane = new JScrollPane();
         add(attrScrollPane, BorderLayout.WEST);
-        attrScrollPane.setMinimumSize(new Dimension(50,100));
+        attrScrollPane.setMinimumSize(new Dimension(50, 100));
         attrUpgradeList = new JList();
         attrScrollPane.setViewportView(attrUpgradeList);
-        attrUpgradeList.setListData(upgradeInfo.getUpgradableStatus());
+        //attrUpgradeList.setListData(upgradeInfo.getUpgradableStatus());
         attrUpgradeList.addMouseListener(controller);
 
         JScrollPane itemScrollPane = new JScrollPane();
         add(itemScrollPane, BorderLayout.EAST);
-        itemScrollPane.setMinimumSize(new Dimension(100,100));
+        itemScrollPane.setMinimumSize(new Dimension(100, 100));
         itemUpgradeList = new JList();
         itemScrollPane.setViewportView(itemUpgradeList);
-        itemUpgradeList.setListData(upgradeInfo.getItemUpgradeInfos());
+        //itemUpgradeList.setListData(upgradeInfo.getItemUpgradeInfos());
         itemUpgradeList.addMouseListener(controller);
 
 //        JPanel logPanel = new LogPanel();
 //        add(logPanel,BorderLayout.EAST);
 
 
-        statusText = new JTextArea("当前英雄状态为："+upgradeManager.getHeroStatus());
+        statusText = new JTextArea("当前英雄状态为：" + upgradeManager.getHeroStatus());
         statusText.setLineWrap(true);
         add(statusText, BorderLayout.CENTER);
 
+        refreshContent();
 
 
+    }
 
+    private void prepareForTour() {
+        hintLabel.setText("请选择欲升级的项目或选择下一场冒险：（再次点击条目或单击列表空白处以确认）");
     }
 
     public void refreshContent() {
         UpgradeInfo upgradeInfo = upgradeManager.getUpgradeInfo();
-        attrUpgradeList.setListData(upgradeInfo.getUpgradableStatus());
-        itemUpgradeList.setListData(upgradeInfo.getItemUpgradeInfos());
 
-        statusText.setText("当前英雄状态为："+upgradeManager.getHeroStatus());
+        if (upgradeInfo.getUpgradableStatus().length > 0) {
+            attrUpgradeList.setListData(upgradeInfo.getUpgradableStatus());
+        } else {
+            attrUpgradeList.setListData(statusManager.getUnlockedTourIds());
+            prepareForTour();
+        }
 
-        //TODO 如果没有可以继续升级的项，那么就查询已解锁的冒险，展示出来，并startTour之类的
+        if (upgradeInfo.getItemUpgradeInfos().length > 0) {
+            itemUpgradeList.setListData(upgradeInfo.getItemUpgradeInfos());
+        } else {
+            itemUpgradeList.setListData(statusManager.getUnlockedTourIds());
+            prepareForTour();
+        }
+
+
+        statusText.setText("当前英雄状态为：" + upgradeManager.getHeroStatus());
     }
 
     public void notifyEvent(EventType eventType, Object event) {
-        if(eventType==EventType.UPGRADE_SUCCESS) {
+        if (eventType == EventType.UPGRADE_SUCCESS) {
             refreshContent();
         }
     }

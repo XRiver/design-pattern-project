@@ -34,7 +34,7 @@ public class TourPanel extends JPanel implements Observer {
         assert game.getGameState()== GameState.TOUR;
         tour = tourManager.getCurrentTour();
         //TODO init DungeonPanel, LogPanel and add them to this
-
+        add(new JLabel("TOUR PANEL"), BorderLayout.NORTH);
 
         logPanel = new LogPanel();
 
@@ -52,7 +52,7 @@ public class TourPanel extends JPanel implements Observer {
         switch (eventType) {
             case TOUR_END:
                 tourManager.removeObserver(this);
-                System.out.println("Removing TourPanel from TourManager's observer list.");
+                System.out.println("TourPanel: Removing TourPanel from TourManager's observer list.");
                 break;
             //TODO
             default:

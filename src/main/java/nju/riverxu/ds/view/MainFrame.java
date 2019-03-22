@@ -42,8 +42,8 @@ public class MainFrame extends JFrame implements Observer {
 
     public void notifyEvent(EventType eventType, Object event) {
         switch (eventType) {
-            case GAME_STARTING:
-                System.out.println("MainFrame: GAME_STARTING");
+            case GAME_MAIN_STATUS_CHANGE:
+                System.out.println("MainFrame: GAME_MAIN_STATUS_CHANGE");
                 resetPanels();
                 break;
             default:

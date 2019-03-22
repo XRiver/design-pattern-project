@@ -5,17 +5,21 @@ import nju.riverxu.ds.model.StatusManager;
 import nju.riverxu.ds.model.data.MapDataManager;
 import nju.riverxu.ds.model.spirit.Spirit;
 import nju.riverxu.ds.model.spirit.hero.Hero;
+import nju.riverxu.ds.model.tour.map.Exit;
+import nju.riverxu.ds.model.tour.map.MapElement;
 import nju.riverxu.ds.util.EventType;
 import nju.riverxu.ds.util.Observable;
 import nju.riverxu.ds.util.Observer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
-public class Tour implements Serializable, Observable, Observer {
+public class Tour implements Serializable, Observable {
     private static ExecutorService spiritThreadPool = Executors.newCachedThreadPool();
 
     private transient Dungeon current;
@@ -64,6 +68,7 @@ public class Tour implements Serializable, Observable, Observer {
 
             d.setHero(hero);
             d.setTour(this);
+
         }
     }
 
@@ -89,14 +94,56 @@ public class Tour implements Serializable, Observable, Observer {
         isRunning = true;
     }
 
+    public void switchDungeon(int exitId) {
+        Exit toExit = null;
+        Dungeon toDungeon = null;
+        for(Dungeon d:dungeons) {
+            Iterator<MapElement> staticElementsIter = d.getMap().getStaticElementsIter();
+            while(staticElementsIter.hasNext()) {
+                MapElement element = staticElementsIter.next();
+                if(element instanceof Exit) {
+                    Exit e = (Exit) element;
+                    if(e.getId()==exitId) {
+                        toExit = e;
+                        break;
+                    }
+                }
+            }
+            if(toExit!= null) {
+                toDungeon = d;
+            }
+        }
+        assert toDungeon!=null;
+
+        current = toDungeon;
+        current.setHeroLocation(toExit.getLocation());
+        current.start();
+
+        // 使用Event通知到View有关Dungeon切换的事情
+        notifyAll(EventType.DUNGEON_SWITCHED, current);
+    }
+
+    public static final int SUCCESS = 1;
+    public static final int GIVE_UP = 2;
+    public static final int DIED = 3;
+    public void end(int result) {
+        switch (result) {
+            //TODO 进行MissionStatus/HeroStatus的刷新与自动存档
+            case SUCCESS:break;
+            case GIVE_UP:break;
+            case DIED:break;
+        }
+
+        spiritThreadPool.shutdownNow();
+    }
 
     private boolean isRunning = false;
     public boolean isRunning() {
         return isRunning;
     }
 
-    public void runSpirit(Spirit s) {
-        spiritThreadPool.submit(s);
+    public Future runSpirit(Spirit s) {
+        return spiritThreadPool.submit(s);
     }
 
     private List<Observer> observers = new ArrayList<Observer>();
@@ -116,7 +163,4 @@ public class Tour implements Serializable, Observable, Observer {
         }
     }
 
-    public void notifyEvent(EventType eventType, Object event) {
-        //TODO 接受来自Dungeon的切换通知；切换current，让新的Dungeon start，也通知到view，让其切换Dungeon画面、更新
-    }
 }

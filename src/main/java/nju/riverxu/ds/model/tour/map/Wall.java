@@ -1,6 +1,7 @@
 package nju.riverxu.ds.model.tour.map;
 
 import nju.riverxu.ds.model.tour.Location;
+import nju.riverxu.ds.util.Algorithm;
 
 public class Wall implements MapElement {
 
@@ -23,5 +24,10 @@ public class Wall implements MapElement {
 
     public boolean isSolid() {
         return isSolid;
+    }
+
+
+    public double distance(Location l) {
+        return Algorithm.distToSegment(l,pt1,pt2);
     }
 }

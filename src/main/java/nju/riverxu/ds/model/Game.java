@@ -20,7 +20,7 @@ import java.util.List;
  * Game为GameController所操纵的model，可以“开始游戏”
  */
 public class Game implements Observable {
-    //TODO not DEBUG!
+
     public static final ManagerFactoryVersion VERSION = ManagerFactoryVersion.DEBUG;
 
     private static Game instance = new Game();
@@ -59,10 +59,10 @@ public class Game implements Observable {
             assert saveManager.hasPrevSave();
 
             gameState = GameState.UPGRADE;
-            notifyAll(EventType.GAME_STARTING, null);
+            notifyAll(EventType.GAME_MAIN_STATUS_CHANGE, null);
         } else {
             gameState = GameState.CHARACTER_INITING;
-            notifyAll(EventType.GAME_STARTING, null);
+            notifyAll(EventType.GAME_MAIN_STATUS_CHANGE, null);
         }
     }
 
@@ -91,7 +91,13 @@ public class Game implements Observable {
         getTourManager().startNewTour(getStatusManager(), id);
         // Tell view that tour is starting
         gameState = GameState.TOUR;
-        notifyAll(EventType.GAME_STARTING, null);
+        notifyAll(EventType.GAME_MAIN_STATUS_CHANGE, null);
+    }
+
+    public void endTour() {
+
+        gameState = GameState.UPGRADE;
+        notifyAll(EventType.GAME_MAIN_STATUS_CHANGE, null);
     }
 
 

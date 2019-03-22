@@ -29,4 +29,8 @@ public class Exit implements MapElement {
     public int getLeadTo() {
         return leadTo;
     }
+
+    public double distance(Location l) {
+        return location.distance(l); // 就当Exit没有半径，只是一个点
+    }
 }

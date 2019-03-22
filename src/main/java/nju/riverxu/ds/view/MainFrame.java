@@ -68,7 +68,7 @@ public class MainFrame extends JFrame implements Observer {
                 break;
             case TOUR:
                 System.out.println("MainFrame: Setting to TOUR panel.");
-                setToDungeonPanel();
+                setToTourPanel();
                 break;
             default:
                 break;
@@ -90,7 +90,7 @@ public class MainFrame extends JFrame implements Observer {
         gameInitPanel.setVisible(true);
     }
 
-    private void setToDungeonPanel() {
+    private void setToTourPanel() {
         tourPanel = new TourPanel();
         clearPanels();
         getContentPane().add(tourPanel);

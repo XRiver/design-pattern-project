@@ -44,6 +44,7 @@ public class TourPanel extends JPanel implements Observer {
         // Listen to events that dungeon changes.
         tour.addObserver(this);
 
+        addKeyListener(tourManager.getTourController());
         setVisible(true);
     }
 

@@ -1,7 +1,7 @@
 package nju.riverxu.ds.controller;
 
-import nju.riverxu.ds.controller.keyboard.DefaultHeroControllerConfig;
-import nju.riverxu.ds.controller.keyboard.HeroControllerConfig;
+import nju.riverxu.ds.controller.keyboard.DefaultCharacterControllerConfig;
+import nju.riverxu.ds.controller.keyboard.CharacterControllerConfig;
 import nju.riverxu.ds.model.Game;
 import nju.riverxu.ds.model.GameState;
 import nju.riverxu.ds.model.tour.Tour;
@@ -17,7 +17,7 @@ public class TourController implements KeyListener {
     /**
      * 负责处理对英雄的操作
      */
-    private HeroControllerConfig conf = null;
+    private CharacterControllerConfig conf = null;
 
     private Game game = null;
     private Tour tour = null;
@@ -28,7 +28,7 @@ public class TourController implements KeyListener {
 
         this.tour = tour;
 
-        conf = new DefaultHeroControllerConfig(tour.getHero());
+        conf = new DefaultCharacterControllerConfig(tour.getHero());
     }
 
     public void keyTyped(KeyEvent e) {
@@ -47,11 +47,11 @@ public class TourController implements KeyListener {
         conf.keyPressed(e);
     }
 
-    public HeroControllerConfig getConf() {
+    public CharacterControllerConfig getConf() {
         return conf;
     }
 
-    public void setConf(HeroControllerConfig conf) {
+    public void setConf(CharacterControllerConfig conf) {
         this.conf = conf;
     }
 }

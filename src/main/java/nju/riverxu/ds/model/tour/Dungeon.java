@@ -3,14 +3,13 @@ package nju.riverxu.ds.model.tour;
 import nju.riverxu.ds.model.spirit.hero.Hero;
 import nju.riverxu.ds.model.spirit.mob.Mob;
 import nju.riverxu.ds.model.tour.map.DungeonMap;
+import nju.riverxu.ds.model.tour.map.MobInfo;
 import nju.riverxu.ds.util.EventType;
 import nju.riverxu.ds.util.Observable;
 import nju.riverxu.ds.util.Observer;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Dungeon implements Observable,Serializable {
 
@@ -29,6 +28,15 @@ public class Dungeon implements Observable,Serializable {
     public Dungeon(DungeonId id, DungeonMap map) {
         this.id = id;
         this.map = map;
+
+        mobLocationHashMap = new HashMap<Mob, Location>();
+
+        heroLocation = map.getHeroInitialLocation();
+        Iterator<MobInfo> mobInfos = map.getMobInfoIter();
+        while(mobInfos.hasNext()) {
+            MobInfo i = mobInfos.next();
+            mobLocationHashMap.put(i.getMob(),i.getLocation());
+        }
     }
 
     public DungeonMap getMap() {
@@ -56,7 +64,11 @@ public class Dungeon implements Observable,Serializable {
      *
      */
     public void start() {
-        //TODO 启动除了英雄以外的Spirit，也就是Mob；Hero由Tour负责启动
+        //启动除了英雄以外的Spirit，也就是Mob；Hero由Tour负责启动
+        for (Map.Entry<Mob, Location> entry : mobLocationHashMap.entrySet()) {
+            tour.runSpirit(entry.getKey());
+        }
+        isRunning = true;
     }
 
     private boolean isRunning = false;

@@ -4,7 +4,7 @@ package nju.riverxu.ds.model.spirit.hero;
 import nju.riverxu.ds.model.spirit.Spirit;
 import nju.riverxu.ds.model.tour.Tour;
 
-public class Hero extends Spirit {
+public class Hero extends Spirit implements OperatedCharacter{
 
     private HeroStatus status = null;
 
@@ -23,6 +23,27 @@ public class Hero extends Spirit {
 
     @Override
     public void act() {
+
+    }
+
+
+    public void startMove(Direction d) {
+
+    }
+
+    public void stopMove(Direction d) {
+
+    }
+
+    public void startUse(ActionSlot a) {
+
+    }
+
+    public void stopUse(ActionSlot a) {
+
+    }
+
+    public void interact() {
 
     }
 }

@@ -51,7 +51,7 @@ public class Tour implements Serializable, Observable, Observer {
     }
 
     /**
-     * 读取原型Tour的地图信息，初始化dungeons，包括里面的Mob、MapElement
+     * 读取原型Tour的地图信息，初始化dungeons，包括里面的Mob
      *
      * @param t
      */
@@ -59,11 +59,12 @@ public class Tour implements Serializable, Observable, Observer {
 
         dungeons = new Dungeon[t.dungeons.length];
         for (int i = 0; i < dungeons.length; i++) {
-            dungeons[i] = new Dungeon(t.dungeons[i].getId(),t.dungeons[i].getMap());
-            dungeons[i].setHero(hero);
-            dungeons[i].setTour(this);
+            Dungeon d = new Dungeon(t.dungeons[i].getId(),t.dungeons[i].getMap());
+            dungeons[i] = d;
+
+            d.setHero(hero);
+            d.setTour(this);
         }
-        //TODO
     }
 
     public TourId getId() {

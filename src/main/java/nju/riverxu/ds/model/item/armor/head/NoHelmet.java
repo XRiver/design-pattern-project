@@ -8,7 +8,7 @@ import nju.riverxu.ds.model.tour.Dungeon;
 
 public class NoHelmet extends Helmet {
     public String getName() {
-        return null;
+        return "没有头盔";
     }
 
     public double getWeight() {

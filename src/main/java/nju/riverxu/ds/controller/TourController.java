@@ -33,7 +33,7 @@ public class TourController implements KeyListener {
 
     public void keyTyped(KeyEvent e) {
         if(e.getKeyCode()==KeyEvent.VK_ESCAPE) {
-            //TODO Try exit tour? Maybe...
+            //Try exit tour? Maybe...
         } else {
             conf.keyTyped(e);
         }

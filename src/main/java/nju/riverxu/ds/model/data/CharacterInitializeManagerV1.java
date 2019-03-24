@@ -4,7 +4,6 @@ import nju.riverxu.ds.controller.CharacterInitController;
 import nju.riverxu.ds.util.ManagerFactory;
 import nju.riverxu.ds.util.ManagerFactoryVersion;
 
-//TODO
 public class CharacterInitializeManagerV1 implements CharacterInitializeManager {
 
     private static CharacterInitializeManager instance = new CharacterInitializeManagerV1();

@@ -1,10 +1,7 @@
 package nju.riverxu.ds.model.spirit.hero;
 
 
-import nju.riverxu.ds.model.item.Consumable;
-import nju.riverxu.ds.model.item.ItemSuite;
-import nju.riverxu.ds.model.item.Skill;
-import nju.riverxu.ds.model.item.Weapon;
+import nju.riverxu.ds.model.item.*;
 import nju.riverxu.ds.model.spirit.AttackInfo;
 import nju.riverxu.ds.model.spirit.AttackResult;
 import nju.riverxu.ds.model.spirit.Direction;
@@ -39,7 +36,7 @@ public class Hero extends Spirit implements OperatedCharacter {
     }
 
     private void init() {
-        hp = status.getAttr(StatusType.VIT) * 10.0;
+        max_hp = hp = status.getAttr(StatusType.VIT) * 10.0;
     }
 
     /**
@@ -66,7 +63,10 @@ public class Hero extends Spirit implements OperatedCharacter {
         }
     }
 
-    private transient double hp;
+    private transient double hp, max_hp;
+    public void heal(Item healBy, double amount) {
+        hp = Math.min(max_hp, hp+amount);
+    }
 
     public AttackResult getDamaged(AttackInfo info) {
         assert info.getFromSpirit() instanceof Mob;

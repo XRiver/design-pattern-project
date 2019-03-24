@@ -19,7 +19,6 @@ public class TourManagerV1 implements TourManager {
     private Tour current = null;
 
     private TourManagerV1(){
-        //TODO
     }
 
     public void startNewTour(StatusManager statusManager, TourId tourId) {

@@ -8,11 +8,11 @@ import nju.riverxu.ds.model.tour.Dungeon;
 
 public class Shirt extends BodyArmor {
     public String getName() {
-        return null;
+        return "衬衣";
     }
 
     public double getWeight() {
-        return 0;
+        return 0.5;
     }
 
     public ItemUpgradeInfo getUpgradeInfo() {

@@ -13,7 +13,7 @@ public class NoBodyArmor extends BodyArmor {
     }
 
     public String getName() {
-        return null;
+        return "没有胸甲";
     }
 
     public double getWeight() {

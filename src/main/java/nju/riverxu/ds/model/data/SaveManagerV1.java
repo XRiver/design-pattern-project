@@ -9,7 +9,6 @@ public class SaveManagerV1 implements SaveManager{
 
     private static SaveManagerV1 instance = new SaveManagerV1();
     private SaveManagerV1(){
-        //TODO
     }
     public static SaveManager getInstance() {
         return instance;

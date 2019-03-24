@@ -9,7 +9,7 @@ import nju.riverxu.ds.model.item.WeaponSuite;
 import nju.riverxu.ds.model.item.armor.body.KnightBodyArmor;
 import nju.riverxu.ds.model.item.armor.body.Shirt;
 import nju.riverxu.ds.model.item.armor.head.KnightHelmet;
-import nju.riverxu.ds.model.item.skill.SmallFireBall;
+import nju.riverxu.ds.model.item.skill.FireBallSkill;
 import nju.riverxu.ds.model.item.weapon.*;
 import nju.riverxu.ds.model.spirit.hero.HeroStatus;
 import nju.riverxu.ds.model.spirit.hero.HeroStatusV1;
@@ -36,17 +36,23 @@ public class CharacterInitializeManagerDebug implements CharacterInitializeManag
         knightStatus.setAttr(StatusType.VIT,12);
         knightStatus.setAttr(StatusType.INT, 8);
         knightStatus.setAttr(StatusType.LEVEL, 30);
+
+        knightStatus.getItemSuite().setSoulCount(5000);
+
         knight.setStatus(knightStatus);
         initTypes[0] = knight;
 
         InitialHero caster = new InitialHero("咒术师", "能够通过远程法术技能攻击敌人", null);
         HeroStatus casterStatus = new HeroStatusV1(new ItemSuite(), new ArmorSuite(null, new Shirt()),
                 new ConsumableSkillSuite(), new WeaponSuite(null, new Dagger()));
-        casterStatus.getItemSuite().set(0,new SmallFireBall());
+        casterStatus.getItemSuite().set(0,new FireBallSkill());
         casterStatus.setAttr(StatusType.STR,8);
         casterStatus.setAttr(StatusType.VIT,12);
         casterStatus.setAttr(StatusType.INT,16);
         casterStatus.setAttr(StatusType.LEVEL,31);
+
+        casterStatus.getItemSuite().setSoulCount(5000);
+
         caster.setStatus(casterStatus);
         initTypes[1] = caster;
 
@@ -58,8 +64,6 @@ public class CharacterInitializeManagerDebug implements CharacterInitializeManag
         beggarStatus.setAttr(StatusType.INT,10);
         beggarStatus.setAttr(StatusType.LEVEL,20);
 
-
-        //TODO dubug!
         beggarStatus.getItemSuite().setSoulCount(5000);
 
         beggar.setStatus(beggarStatus);

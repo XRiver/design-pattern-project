@@ -17,7 +17,6 @@ public class StatusManagerV1 implements StatusManager {
     }
 
     private StatusManagerV1() {
-        //TODO
     }
 
     private HeroStatus heroStatus;

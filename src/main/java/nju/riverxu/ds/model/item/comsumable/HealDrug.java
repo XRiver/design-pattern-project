@@ -16,6 +16,8 @@ public class HealDrug extends Consumable {
     }
 
     public void affect(Spirit spirit) {
-
+        assert spirit instanceof Hero;
+        Hero h = (Hero) spirit;
+        h.heal(this, 80.0);
     }
 }

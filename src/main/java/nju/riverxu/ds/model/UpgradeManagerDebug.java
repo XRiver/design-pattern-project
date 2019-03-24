@@ -186,7 +186,7 @@ public class UpgradeManagerDebug implements UpgradeManager {
     }
 
     public void refreshAndSave(boolean survived) {
-        //TODO 应当对于Skill的使用次数进行刷新。但是Demo版暂时不包括此功能。
+        //应当对于Skill的使用次数进行刷新。但是Demo版暂时不包括此功能，因为Skill使用次数无上限。
 
         if(!survived) { // Lose souls
             heroStatus.getItemSuite().setSoulCount(0);

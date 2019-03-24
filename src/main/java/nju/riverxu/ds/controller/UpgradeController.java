@@ -47,8 +47,6 @@ public class UpgradeController implements MouseListener {
             }
         }
         prevSelected = selected;
-
-        //TODO use logger to give advice?
     }
 
     public void mousePressed(MouseEvent e) {

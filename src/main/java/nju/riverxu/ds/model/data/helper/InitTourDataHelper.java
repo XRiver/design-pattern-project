@@ -12,7 +12,6 @@ import java.util.List;
 
 /**
  * 本类用于生成最初的地图数据；
- * TODO 注意地图数据要与设计的MissionStatus对齐，否则MapDataManager在加载时就会遇到问题
  */
 public class InitTourDataHelper {
 

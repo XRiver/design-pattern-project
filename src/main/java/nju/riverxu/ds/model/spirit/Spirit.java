@@ -16,7 +16,7 @@ public abstract class Spirit implements Runnable, Serializable {
     }
     public abstract void act();
 
-    //TODO 下放到Hero与Mob，设置两者不同的响应速度可以节约一点资源？？调整frameInterval已达到预期效果。
+    //下放到Hero与Mob，设置两者不同的响应速度可以节约一点资源？？调整frameInterval已达到预期效果。
     public void run() {
         while(active) {
             try {

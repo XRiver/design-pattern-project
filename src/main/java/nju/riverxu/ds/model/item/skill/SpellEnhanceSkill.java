@@ -1,25 +1,26 @@
-package nju.riverxu.ds.model.item.armor.body;
+package nju.riverxu.ds.model.item.skill;
 
-import nju.riverxu.ds.model.item.ItemCantUpgradeInfo;
 import nju.riverxu.ds.model.item.ItemUpgradeInfo;
-import nju.riverxu.ds.model.item.armor.BodyArmor;
+import nju.riverxu.ds.model.item.Skill;
+import nju.riverxu.ds.model.spirit.Spirit;
 import nju.riverxu.ds.model.spirit.hero.Hero;
 import nju.riverxu.ds.model.tour.Dungeon;
 
-public class Shirt extends BodyArmor {
+public class SpellEnhanceSkill extends Skill {
+
     public String getName() {
         return null;
     }
 
-    public double getWeight() {
-        return 0;
-    }
-
     public ItemUpgradeInfo getUpgradeInfo() {
-        return ItemCantUpgradeInfo.getInstance();
+        return null;
     }
 
     public boolean upgrade() {
         return false;
+    }
+
+    public void affect(Spirit s) {
+
     }
 }

@@ -7,11 +7,6 @@ import nju.riverxu.ds.model.spirit.hero.Hero;
 import nju.riverxu.ds.model.tour.Dungeon;
 
 public class NoHelmet extends Helmet {
-
-    public void use(Dungeon dungeon, Hero hero) {
-
-    }
-
     public String getName() {
         return null;
     }

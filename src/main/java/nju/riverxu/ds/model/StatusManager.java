@@ -7,4 +7,5 @@ public interface StatusManager extends Observable {
     TourId[] getTourIds();
     UpgradeManager getUpgradeManager();
     TourId[] getUnlockedTourIds();
+    void completeTour(TourId id, boolean success);
 }

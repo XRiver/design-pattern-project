@@ -52,10 +52,12 @@ public class TourPanel extends JPanel implements Observer {
     public void notifyEvent(EventType eventType, Object event) {
         switch (eventType) {
             case TOUR_END:
+                assert event == tour;
                 tour.removeObserver(this);
                 System.out.println("TourPanel: Removing TourPanel from TourManager's observer list.");
                 break;
-            //TODO
+            case DUNGEON_SWITCHED:
+            //TODO 变换DungeonPanel
             default:
                 break;
         }

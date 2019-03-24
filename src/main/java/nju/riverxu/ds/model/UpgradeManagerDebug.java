@@ -47,7 +47,7 @@ public class UpgradeManagerDebug implements UpgradeManager {
             loadHeroStatus();
         }
 
-        refreshSave();
+        refreshAndSave(true);
 
         int soulCount = heroStatus.getItemSuite().getSoulCount();
         int level = heroStatus.getAttr(StatusType.LEVEL);
@@ -185,7 +185,12 @@ public class UpgradeManagerDebug implements UpgradeManager {
         return heroStatus;
     }
 
-    public void refreshSave() {
+    public void refreshAndSave(boolean survived) {
+        //TODO 应当对于Skill的使用次数进行刷新。但是Demo版暂时不包括此功能。
+
+        if(!survived) { // Lose souls
+            heroStatus.getItemSuite().setSoulCount(0);
+        }
         saveManager.saveHeroStatus(heroStatus);
     }
 

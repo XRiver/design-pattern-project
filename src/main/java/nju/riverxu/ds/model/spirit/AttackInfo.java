@@ -4,15 +4,17 @@ import nju.riverxu.ds.model.item.Item;
 import nju.riverxu.ds.model.spirit.effect.Effect;
 import nju.riverxu.ds.model.tour.Location;
 
+import java.util.List;
+
 public class AttackInfo {
     private Spirit fromSpirit;
     private Location fromLocation;
     private Item usingItem;
-    private Effect[] effects;
+    private List<Effect> effects;
 
     private double rawDamage; // 不计算受击者护甲时可造成伤害（只是为了方便计算而存在的字段，“正式版”游戏不使用此字段）
 
-    public AttackInfo(Spirit fromSpirit, Location fromLocation, Item usingItem, Effect[] effects, double rawDamage) {
+    public AttackInfo(Spirit fromSpirit, Location fromLocation, Item usingItem, List<Effect> effects, double rawDamage) {
         this.fromSpirit = fromSpirit;
         this.fromLocation = fromLocation;
         this.usingItem = usingItem;
@@ -32,7 +34,7 @@ public class AttackInfo {
         return usingItem;
     }
 
-    public Effect[] getEffects() {
+    public List<Effect> getEffects() {
         return effects;
     }
 

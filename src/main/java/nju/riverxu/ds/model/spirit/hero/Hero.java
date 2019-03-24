@@ -2,14 +2,19 @@ package nju.riverxu.ds.model.spirit.hero;
 
 
 import nju.riverxu.ds.model.item.Consumable;
+import nju.riverxu.ds.model.item.ItemSuite;
 import nju.riverxu.ds.model.item.Skill;
 import nju.riverxu.ds.model.item.Weapon;
 import nju.riverxu.ds.model.spirit.AttackInfo;
 import nju.riverxu.ds.model.spirit.AttackResult;
+import nju.riverxu.ds.model.spirit.Direction;
 import nju.riverxu.ds.model.spirit.Spirit;
 import nju.riverxu.ds.model.spirit.effect.Effect;
+import nju.riverxu.ds.model.spirit.mob.Mob;
+import nju.riverxu.ds.model.tour.Dungeon;
+import nju.riverxu.ds.model.tour.Location;
 import nju.riverxu.ds.model.tour.Tour;
-import org.javatuples.Pair;
+import nju.riverxu.ds.util.Algorithm;
 import org.javatuples.Triplet;
 
 import java.util.LinkedList;
@@ -25,25 +30,73 @@ public class Hero extends Spirit implements OperatedCharacter {
 
     private Tour tour = null;
 
+    private Direction direction = Direction.NORTH;
+
     public Hero(HeroStatus status, Tour tour) {
         this.status = status;
         this.tour = tour;
+        init();
     }
 
-    private void useWeapon(Weapon weapon) {
-
+    private void init() {
+        hp = status.getAttr(StatusType.VIT) * 10.0;
     }
 
-    private AttackResult getDamaged(AttackInfo info) {
-        return null;
+    /**
+     * 一般只由Hero.act()调用；也可由“攻击性法术类”（如SmallFireball）进行调用
+     * @param weapon
+     */
+    public void useWeapon(Weapon weapon) {
+        Dungeon d = tour.getCurrent();
+        Location myLoc = d.getHeroLocation();
+
+        Location attacked = Algorithm.getMigratedLocation(myLoc,direction,getRadius()+weapon.getWeaponRange().getRange());
+        Mob[] targets = d.getMobs(attacked,null);
+
+        if(targets.length>0) {
+            AttackInfo attackInfo = new AttackInfo(this, myLoc, weapon, activeEffects, weapon.getRawDamage(this));
+            for(Mob m:targets) {
+                AttackResult attackResult = m.getDamaged(attackInfo);
+                if(attackResult.isKilled()) {
+                    // Add souls
+                    ItemSuite itemSuite = status.getItemSuite();
+                    itemSuite.setSoulCount(m.soulCount()+itemSuite.getSoulCount());
+                }
+            }
+        }
+    }
+
+    private transient double hp;
+
+    public AttackResult getDamaged(AttackInfo info) {
+        assert info.getFromSpirit() instanceof Mob;
+        double realDamage = status.getArmorSuite().getRealDamage(info, this);
+
+        if(hp <= realDamage) {
+            die();
+            return new AttackResult(true,AttackResult.EFFECTIVE, realDamage);
+        } else {
+            hp -= realDamage;
+            return new AttackResult(false,AttackResult.EFFECTIVE,realDamage);
+        }
     }
 
     private void useConsumable(int ind) {
-
+        Consumable c = status.getConsumableSkillSuite().getConsumable(ind-1);
+        if(c!=null) {
+            c.affect(this);
+        }
     }
 
     private void useSkill(int ind) {
+        Skill s = status.getConsumableSkillSuite().getSkill(ind-1);
+        if(s!=null) {
+            s.affect(this);
+        }
+    }
 
+    public void interact() {
+        tour.getCurrent().interact(this);
     }
 
     List<Effect> activeEffects = new LinkedList<Effect>();
@@ -68,7 +121,7 @@ public class Hero extends Spirit implements OperatedCharacter {
 
     @Override
     public void act() {
-
+        //TODO !!
 
     }
 
@@ -118,10 +171,6 @@ public class Hero extends Spirit implements OperatedCharacter {
     }
 
 
-    private ActionSlot prevTryingToUse;
-    private boolean usingLeftHand = false;
-    private boolean usingRightHand = false;
-
     // boolean为true表示“开始动作”，false表示“结束动作”
     private ConcurrentLinkedQueue<Triplet<ActionSlot, Boolean, Long>> actionCommands =
             new ConcurrentLinkedQueue<Triplet<ActionSlot, Boolean, Long>>();
@@ -134,11 +183,12 @@ public class Hero extends Spirit implements OperatedCharacter {
         actionCommands.add(new Triplet<ActionSlot, Boolean, Long>(a, false, frame.get()));
     }
 
-    public void interact() {
-        tour.getCurrent().interact(this);
+    public HeroStatus getStatus() {
+        return status;
     }
 
     private void die() {
+        hp = 0.0;
         active = false;
         tour.end(Tour.DIED);
     }

@@ -1,30 +1,34 @@
 package nju.riverxu.ds.model.item.weapon;
 
+import nju.riverxu.ds.model.item.ItemCantUpgradeInfo;
 import nju.riverxu.ds.model.item.ItemUpgradeInfo;
 import nju.riverxu.ds.model.item.Weapon;
+import nju.riverxu.ds.model.spirit.Spirit;
 import nju.riverxu.ds.model.spirit.hero.Hero;
-import nju.riverxu.ds.model.tour.Dungeon;
+import nju.riverxu.ds.model.spirit.hero.StatusType;
 
 public class Dagger extends Weapon {
-
-
-    public void use(Dungeon dungeon, Hero hero) {
-
-    }
 
     public String getName() {
         return "盗贼短刀";
     }
 
     public double getWeight() {
-        return 0;
+        return 5;
     }
 
     public ItemUpgradeInfo getUpgradeInfo() {
-        return new ItemUpgradeInfo(true,this,600);
+        return ItemCantUpgradeInfo.getInstance();
     }
 
     public boolean upgrade() {
         return false;
+    }
+
+    public double getRawDamage(Spirit user) {
+        if(user instanceof Hero) {
+            return 40+((Hero) user).getStatus().getAttr(StatusType.STR)*0.5;
+        }
+        return 40.0;
     }
 }

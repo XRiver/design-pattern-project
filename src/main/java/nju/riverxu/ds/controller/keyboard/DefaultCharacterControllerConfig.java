@@ -1,7 +1,7 @@
 package nju.riverxu.ds.controller.keyboard;
 
 import nju.riverxu.ds.model.spirit.hero.ActionSlot;
-import nju.riverxu.ds.model.spirit.hero.Direction;
+import nju.riverxu.ds.model.spirit.Direction;
 import nju.riverxu.ds.model.spirit.hero.OperatedCharacter;
 
 import java.awt.event.KeyEvent;

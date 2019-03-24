@@ -6,11 +6,6 @@ import nju.riverxu.ds.model.spirit.hero.Hero;
 import nju.riverxu.ds.model.tour.Dungeon;
 
 public class KnightHelmet extends Helmet {
-
-    public void use(Dungeon dungeon, Hero hero) {
-
-    }
-
     public String getName() {
         return "骑士头盔";
     }

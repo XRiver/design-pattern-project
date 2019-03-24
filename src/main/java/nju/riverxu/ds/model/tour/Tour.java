@@ -2,6 +2,7 @@ package nju.riverxu.ds.model.tour;
 
 import nju.riverxu.ds.model.Game;
 import nju.riverxu.ds.model.StatusManager;
+import nju.riverxu.ds.model.UpgradeManager;
 import nju.riverxu.ds.model.data.MapDataManager;
 import nju.riverxu.ds.model.spirit.Spirit;
 import nju.riverxu.ds.model.spirit.hero.Hero;
@@ -29,6 +30,8 @@ public class Tour implements Serializable, Observable {
 
     private TourId id;
 
+    private StatusManager statusManager;
+
     /**
      * 使用id进行初始化，将会运行时动态加载Dungeon及其地图
      * @param id
@@ -36,6 +39,7 @@ public class Tour implements Serializable, Observable {
      */
     public Tour(TourId id, StatusManager statusManager) {
         this.id = id;
+        this.statusManager = statusManager;
         MapDataManager mapLoader = Game.getInstance().getManagerFactory().makeMapDataManager();
         Tour prototype = mapLoader.loadTour(id);
 
@@ -127,14 +131,26 @@ public class Tour implements Serializable, Observable {
     public static final int GIVE_UP = 2;
     public static final int DIED = 3;
     public void end(int result) {
+        UpgradeManager upgradeManager = statusManager.getUpgradeManager();
+
         switch (result) {
-            //TODO 进行MissionStatus/HeroStatus的刷新与自动存档
-            case SUCCESS:break;
-            case GIVE_UP:break;
-            case DIED:break;
+            //进行MissionStatus/HeroStatus的刷新与自动存档
+            case SUCCESS:
+                statusManager.completeTour(id,true);
+                upgradeManager.refreshAndSave(true);
+                break;
+            case GIVE_UP:
+                statusManager.completeTour(id,false);
+                upgradeManager.refreshAndSave(true);
+                break;
+            case DIED:
+                statusManager.completeTour(id,false);
+                upgradeManager.refreshAndSave(false);
+                break;
         }
 
         spiritThreadPool.shutdownNow();
+        notifyAll(EventType.TOUR_END, this);
     }
 
     private boolean isRunning = false;

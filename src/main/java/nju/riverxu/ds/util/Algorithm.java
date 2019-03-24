@@ -1,5 +1,6 @@
 package nju.riverxu.ds.util;
 
+import nju.riverxu.ds.model.spirit.Direction;
 import nju.riverxu.ds.model.tour.Location;
 
 public class Algorithm {
@@ -39,4 +40,18 @@ public class Algorithm {
         return distSqr(pt, new Location(loc1.getX() + t * (loc2.getX() - loc1.getX()), loc1.getY() + t * (loc2.getY() - loc1.getY())));
     }
 
+    public static Location getMigratedLocation(Location base, Direction direction, double diff) {
+        switch (direction) {
+            case EAST:
+                return new Location(base.getX() + diff, base.getY());
+            case WEST:
+                return new Location(base.getX() - diff, base.getY());
+            case NORTH:
+                return new Location(base.getX(), base.getY() - diff);
+            case SOUTH:
+                return new Location(base.getX(), base.getY() + diff);
+            default:
+                return null;
+        }
+    }
 }

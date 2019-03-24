@@ -3,6 +3,7 @@ package nju.riverxu.ds.model;
 
 import nju.riverxu.ds.controller.GameController;
 import nju.riverxu.ds.model.data.SaveManager;
+import nju.riverxu.ds.model.tour.Tour;
 import nju.riverxu.ds.model.tour.TourId;
 import nju.riverxu.ds.util.*;
 
@@ -19,7 +20,7 @@ import java.util.List;
  *
  * Game为GameController所操纵的model，可以“开始游戏”
  */
-public class Game implements Observable {
+public class Game implements Observable, Observer {
 
     public static final ManagerFactoryVersion VERSION = ManagerFactoryVersion.DEBUG;
 
@@ -87,15 +88,16 @@ public class Game implements Observable {
 
 
     public void startTour(TourId id) {
-        //delegate to TourManager
+        //delegate to TourManager and listen for the Tour's end
         getTourManager().startNewTour(getStatusManager(), id);
+        getTourManager().getCurrentTour().addObserver(this);
         // Tell view that tour is starting
         gameState = GameState.TOUR;
         notifyAll(EventType.GAME_MAIN_STATUS_CHANGE, null);
     }
 
-    public void endTour() {
-
+    public void endTour(Tour tour) {
+        tour.removeObserver(this);
         gameState = GameState.UPGRADE;
         notifyAll(EventType.GAME_MAIN_STATUS_CHANGE, null);
     }
@@ -119,6 +121,14 @@ public class Game implements Observable {
     public void notifyAll(EventType eventType, Object event) {
         for(Observer ob: observers) {
             ob.notifyEvent(eventType, event);
+        }
+    }
+
+    public void notifyEvent(EventType eventType, Object event) {
+        switch (eventType) {
+            case TOUR_END:
+                endTour((Tour)event);
+                break;
         }
     }
 }

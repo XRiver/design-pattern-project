@@ -7,10 +7,6 @@ import nju.riverxu.ds.model.tour.Dungeon;
 
 public class KnightBodyArmor extends BodyArmor {
 
-    public void use(Dungeon dungeon, Hero hero) {
-
-    }
-
     public String getName() {
         return "骑士胸甲";
     }

@@ -32,7 +32,7 @@ public class UpgradeManagerV1 implements UpgradeManager {
         return null;
     }
 
-    public void refreshSave() {
+    public void refreshAndSave(boolean survived) {
 
     }
 

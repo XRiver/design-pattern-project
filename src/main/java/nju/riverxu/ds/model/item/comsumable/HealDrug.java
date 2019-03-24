@@ -1,19 +1,21 @@
 package nju.riverxu.ds.model.item.comsumable;
 
 import nju.riverxu.ds.model.item.Consumable;
+import nju.riverxu.ds.model.spirit.Spirit;
 import nju.riverxu.ds.model.spirit.hero.Hero;
 import nju.riverxu.ds.model.tour.Dungeon;
 
-public class HPStrengthenDrug extends Consumable {
-    public void use(Dungeon dungeon, Hero hero) {
-        //TODO
-    }
+public class HealDrug extends Consumable {
 
     public String getName() {
-        return "生命值上限强化药水";
+        return "生命药水";
     }
 
     public double getWeight() {
         return 2;
+    }
+
+    public void affect(Spirit spirit) {
+
     }
 }

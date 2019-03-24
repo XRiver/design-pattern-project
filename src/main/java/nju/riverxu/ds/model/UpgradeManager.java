@@ -19,5 +19,5 @@ public interface UpgradeManager extends Observable {
 
     HeroStatus getHeroStatus();
 
-    void refreshSave();
+    void refreshAndSave(boolean survived);
 }

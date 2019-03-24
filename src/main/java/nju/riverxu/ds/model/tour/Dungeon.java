@@ -35,6 +35,7 @@ public class Dungeon implements Observable, Serializable {
         Iterator<MobInfo> mobInfos = map.getMobInfoIter();
         while (mobInfos.hasNext()) {
             MobInfo i = mobInfos.next();
+            i.getMob().setDungeon(this);
             mobLocationHashMap.put(i.getMob(), i.getLocation());
         }
     }
@@ -60,6 +61,10 @@ public class Dungeon implements Observable, Serializable {
         this.heroLocation = heroLocation;
     }
 
+    public Location getHeroLocation() {
+        return heroLocation;
+    }
+
     /**
      * 搜索一个点上的或一片区域内的所有Spirit；当size为null，则为单点，否则搜索矩形区域的所有Spirit
      *
@@ -67,22 +72,18 @@ public class Dungeon implements Observable, Serializable {
      * @param size        不为空时，指矩形的x轴y轴上的长度
      * @return
      */
-    public Spirit[] getSpirits(Location absoluteLoc, Location size) {
+    public Mob[] getMobs(Location absoluteLoc, Location size) {
         if (size == null) {
-            List<Spirit> spiritList = new LinkedList<Spirit>();
-            if (heroLocation.distance(absoluteLoc) < hero.getRadius()) {
-                spiritList.add(hero);
-            }
+            List<Mob> mobList = new LinkedList<Mob>();
             for (Map.Entry<Mob, Location> mobLocationEntry : mobLocationHashMap.entrySet()) {
                 if (mobLocationEntry.getValue().distance(absoluteLoc) < mobLocationEntry.getKey().getRadius()) {
-                    spiritList.add(mobLocationEntry.getKey());
+                    mobList.add(mobLocationEntry.getKey());
                 }
             }
-
-            return spiritList.toArray(new Spirit[0]);
+            return mobList.toArray(new Mob[0]);
         } else {
-            //TODO Demo版不包含AOE或类似技能??
-            return new Spirit[0];
+            //Demo版不包含AOE或类似技能??
+            return new Mob[0];
         }
     }
 
@@ -135,8 +136,10 @@ public class Dungeon implements Observable, Serializable {
             MapElement mapElement = staticElementsIter.next();
             if (mapElement instanceof Exit) {
                 Exit exit = (Exit) mapElement;
-                useExit(exit);
-                return;
+                if(heroLocation.distance(exit.getLocation()) < hero.getRadius()) {
+                    useExit(exit);
+                    return;
+                }
             }
         }
     }
@@ -151,25 +154,40 @@ public class Dungeon implements Observable, Serializable {
                 break;
             default:
                 tour.switchDungeon(e.getLeadTo());
+                active = false;
                 break;
         }
     }
 
-    /**
-     *
-     */
-    public void start() {
-        if (isRunning) {
-            return;
-        }
-
-        //启动除了英雄以外的Spirit，也就是Mob；Hero由Tour负责启动
-        for (Map.Entry<Mob, Location> entry : mobLocationHashMap.entrySet()) {
-            tour.runSpirit(entry.getKey());
-        }
-        isRunning = true;
+    public Hero getHero() {
+        return hero;
     }
 
+    private boolean active = false;
+
+    public void activate() {
+        active = true;
+    }
+
+    public void start() {
+        if (isRunning && active) {
+            return;
+        }
+        if(!isRunning) {
+            //启动除了英雄以外的Spirit，也就是Mob；Hero由Tour负责启动
+            for (Map.Entry<Mob, Location> entry : mobLocationHashMap.entrySet()) {
+                tour.runSpirit(entry.getKey());
+            }
+        }
+
+        isRunning = true;
+        activate();
+    }
+
+    /**
+     * 表示Dungeon内的Mob是否在运行。
+     * 字段只会从初始的false变成true，不会变回false。
+     */
     private boolean isRunning = false;
 
     public boolean isRunning() {

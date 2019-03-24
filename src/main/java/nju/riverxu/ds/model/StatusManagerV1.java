@@ -36,6 +36,10 @@ public class StatusManagerV1 implements StatusManager {
         return new TourId[0];
     }
 
+    public void completeTour(TourId id, boolean success) {
+
+    }
+
 
     private List<Observer> observers = new ArrayList<Observer>();
     public void addObserver(Observer observer) {

@@ -4,6 +4,8 @@ import nju.riverxu.ds.model.item.armor.BodyArmor;
 import nju.riverxu.ds.model.item.armor.Helmet;
 import nju.riverxu.ds.model.item.armor.body.NoBodyArmor;
 import nju.riverxu.ds.model.item.armor.head.NoHelmet;
+import nju.riverxu.ds.model.spirit.AttackInfo;
+import nju.riverxu.ds.model.spirit.Spirit;
 
 import java.io.Serializable;
 
@@ -76,4 +78,16 @@ public class ArmorSuite implements Serializable {
                 ", 身体=" + bodyArmorSlot.getName() +
                 '}';
     }
+
+    /**
+     * Demo版不根据具体Armor与角色属性计算真正伤害，而是固定减伤20% 。即使“没有护甲”也是这样。
+     * @param info
+     * @param target
+     * @return
+     */
+    public double getRealDamage(AttackInfo info, Spirit target) {
+
+        return info.getRawDamage()*0.8;
+    }
+
 }

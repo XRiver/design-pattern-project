@@ -2,6 +2,7 @@ package nju.riverxu.ds.model;
 
 import nju.riverxu.ds.model.data.MissionStatus;
 import nju.riverxu.ds.model.data.SaveManager;
+import nju.riverxu.ds.model.data.TourInfo;
 import nju.riverxu.ds.model.tour.TourId;
 import nju.riverxu.ds.util.EventType;
 import nju.riverxu.ds.util.Observer;
@@ -55,6 +56,20 @@ public class StatusManagerDebug implements StatusManager {
             }
         }
         return unlocked.toArray(new TourId[0]);
+    }
+
+    public void completeTour(TourId id, boolean success) {
+        SaveManager saveManager = game.getManagerFactory().makeSaveManager();
+        for(int unlockId:id.getNextUnlock()) {
+
+            TourInfo tourInfo = missionStatus.getInfoArray()[unlockId];
+            tourInfo.setAttemptTimes(tourInfo.getAttemptTimes()+1);
+            if(success) {
+                tourInfo.setUnlocked(true);
+                tourInfo.setCompleteTimes(tourInfo.getCompleteTimes()+1);
+            }
+        }
+        saveManager.saveMissionStatus(missionStatus);
     }
 
 

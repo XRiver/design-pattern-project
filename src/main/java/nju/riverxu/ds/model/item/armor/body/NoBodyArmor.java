@@ -12,10 +12,6 @@ public class NoBodyArmor extends BodyArmor {
         return false;
     }
 
-    public void use(Dungeon dungeon, Hero hero) {
-
-    }
-
     public String getName() {
         return null;
     }

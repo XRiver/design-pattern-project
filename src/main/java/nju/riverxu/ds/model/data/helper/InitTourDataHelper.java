@@ -73,7 +73,7 @@ public class InitTourDataHelper {
             List<MapElement> elements = new ArrayList<MapElement>();
             elements.add(new Exit(4, new Location(100,100), 3));
             elements.add(new Exit(5, new Location(200,200), Exit.COMPLETE_TOUR));
-            DungeonMap map = new DungeonMapV1(elements, new ArrayList<MobInfo>(), null,size);
+            DungeonMap map = new DungeonMapV1(elements, new ArrayList<MobInfo>(), new Location(0,0),size);
             Dungeon d = new Dungeon(new DungeonId(2,"监视塔"), map);;
             dungeons[1] = d;
         }

@@ -27,4 +27,13 @@ public class AttackResult {
     public double getRealDamage() {
         return realDamage;
     }
+
+    @Override
+    public String toString() {
+        return "AttackResult{" +
+                "killed=" + killed +
+                ", effect=" + effect +
+                ", realDamage=" + realDamage +
+                '}';
+    }
 }

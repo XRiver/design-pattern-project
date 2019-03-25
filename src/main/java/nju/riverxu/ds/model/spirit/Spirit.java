@@ -22,7 +22,6 @@ public abstract class Spirit implements Runnable, Serializable {
             try {
                 Thread.sleep(frameInterval);
             } catch (InterruptedException e) {
-                e.printStackTrace();
                 break; // Abnormal termination. Or stopped by tour.end()
             }
             frame.incrementAndGet();
@@ -32,5 +31,9 @@ public abstract class Spirit implements Runnable, Serializable {
 
     public double getRadius() {
         return 5.0;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 }

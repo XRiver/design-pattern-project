@@ -34,4 +34,12 @@ public class Location implements Serializable {
         double xd = l.x - x, yd = l.y - y;
         return Math.sqrt(xd*xd+yd*yd);
     }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }

@@ -28,6 +28,15 @@ public class Hero extends Spirit implements OperatedCharacter {
 
     //再加上各种便于计算的易变状态，包括动作状态等
 
+    private boolean isRunning = false;
+
+    public void setRunning(boolean running) {
+        isRunning = running;
+    }
+
+    public boolean isRunning() {
+        return isRunning;
+    }
 
     private Tour tour = null;
 
@@ -55,10 +64,12 @@ public class Hero extends Spirit implements OperatedCharacter {
         Location attacked = Algorithm.getMigratedLocation(myLoc, direction, getRadius() + weapon.getWeaponRange().getRange());
         Mob[] targets = d.getMobs(attacked, null);
 
+        System.out.println("Hero使用武器"+weapon.getName()+"攻击，有"+targets.length+"个目标");
         if (targets.length > 0) {
             AttackInfo attackInfo = new AttackInfo(this, myLoc, weapon, activeEffects, weapon.getRawDamage(this));
             for (Mob m : targets) {
                 AttackResult attackResult = m.getDamaged(attackInfo);
+                System.out.println(attackResult);
                 if (attackResult.isKilled()) {
                     // Add souls
                     ItemSuite itemSuite = status.getItemSuite();
@@ -111,6 +122,7 @@ public class Hero extends Spirit implements OperatedCharacter {
     }
 
     public void interact() {
+        halt();
         tour.getCurrent().interact(this);
     }
 
@@ -133,8 +145,12 @@ public class Hero extends Spirit implements OperatedCharacter {
         activeEffects.remove(e);
     }
 
+    public boolean isLeftHandBlocking() {
+        return leftHandBlocking;
+    }
+
     // Demo设定为左手只能防御，右手做各种操作（攻击、技能、消耗品）
-    private boolean leftHandBlocking = false, rightHandPreparing = false;
+    private volatile boolean leftHandBlocking = false, rightHandPreparing = false;
     private Triplet<ActionSlot, Boolean, Long> rightHandBusiness = null;
     private List<Pair<ActionSlot, Long>> scheduledAction = new ArrayList<Pair<ActionSlot, Long>>();
     private int actionPtr = 0;
@@ -222,37 +238,37 @@ public class Hero extends Spirit implements OperatedCharacter {
         }
     }
 
+    private void halt() {
+        xMoveStatus = yMoveStatus = 0;
+        leftHandBlocking = false;
+        rightHandPreparing = false;
+    }
+
     private void frameMove() {
         // 每帧移动距离为1
         double totald = Math.sqrt(xMoveStatus * xMoveStatus + yMoveStatus * yMoveStatus);
-        Dungeon d = tour.getCurrent();
-        d.move(this, new Location(xMoveStatus / totald, yMoveStatus / totald));
+        if(totald!=0.0) {
+            Dungeon d = tour.getCurrent();
+            d.move(this, new Location(xMoveStatus / totald, yMoveStatus / totald));
+        }
     }
 
     // -1,0,1分别表示正在在此轴上向负方向移动/不动/向正方向移动
-    private int xMoveStatus = 0, yMoveStatus = 0;
-
-    private boolean xStill() {
-        return xMoveStatus == 0;
-    }
-
-    private boolean yStill() {
-        return yMoveStatus == 0;
-    }
+    private volatile int xMoveStatus = 0, yMoveStatus = 0;
 
     public void startMove(Direction d) {
         switch (d) {
             case EAST:
-                if (xStill()) xMoveStatus = 1;
+                xMoveStatus = 1;
                 break;
             case WEST:
-                if (xStill()) xMoveStatus = -1;
+                xMoveStatus = -1;
                 break;
             case NORTH:
-                if (yStill()) yMoveStatus = -1;
+                yMoveStatus = -1;
                 break;
             case SOUTH:
-                if (yStill()) yMoveStatus = 1;
+                yMoveStatus = 1;
                 break;
         }
     }
@@ -260,16 +276,12 @@ public class Hero extends Spirit implements OperatedCharacter {
     public void stopMove(Direction d) {
         switch (d) {
             case EAST:
-                if (xMoveStatus == 1) xMoveStatus = 0;
-                break;
             case WEST:
-                if (xMoveStatus == -1) xMoveStatus = 0;
+                xMoveStatus = 0;
                 break;
             case NORTH:
-                if (yMoveStatus == -1) yMoveStatus = 0;
-                break;
             case SOUTH:
-                if (yMoveStatus == 1) yMoveStatus = 0;
+                yMoveStatus = 0;
                 break;
         }
     }

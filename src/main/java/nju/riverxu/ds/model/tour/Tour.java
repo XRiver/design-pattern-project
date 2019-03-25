@@ -92,7 +92,12 @@ public class Tour implements Serializable, Observable {
      * 开始Tour的运行；在此之后controller才可使用
      */
     public void start() {
-        runSpirit(hero);
+        if(!hero.isRunning()) {
+            runSpirit(hero);
+            hero.setRunning(true);
+        }
+
+
         current.start();
 
         isRunning = true;
@@ -149,7 +154,7 @@ public class Tour implements Serializable, Observable {
                 break;
         }
 
-        spiritThreadPool.shutdownNow();
+        //spiritThreadPool.shutdownNow();
         notifyAll(EventType.TOUR_END, this);
     }
 

@@ -30,8 +30,7 @@ public class Dungeon implements Observable, Serializable {
         this.map = map;
 
         mobLocationHashMap = new HashMap<Mob, Location>();
-
-        heroLocation = map.getHeroInitialLocation();
+        heroLocation = new Location(map.getHeroInitialLocation().getX(),map.getHeroInitialLocation().getY());
         Iterator<MobInfo> mobInfos = map.getMobInfoIter();
         while (mobInfos.hasNext()) {
             MobInfo i = mobInfos.next();
@@ -48,6 +47,9 @@ public class Dungeon implements Observable, Serializable {
         return id;
     }
 
+    public Set<Mob> getMobs() {
+        return mobLocationHashMap.keySet();
+    }
 
     public void setHero(Hero hero) {
         this.hero = hero;
@@ -156,8 +158,8 @@ public class Dungeon implements Observable, Serializable {
                 break;
             default:
                 tour.switchDungeon(e.getLeadTo());
-                heroLocation.setX(-1000); // 将英雄移除场外，避免可能仍在运行的怪物行为逻辑误判
-                active = false;
+
+                deactivate();
                 break;
         }
     }
@@ -168,8 +170,35 @@ public class Dungeon implements Observable, Serializable {
 
     private boolean active = false;
 
+    private Thread refresher = null;
     public void activate() {
         active = true;
+        if(refresher == null) {
+            refresher = new Thread(new DungeonViewRefresher());
+        }
+        refresher.start();
+    }
+
+    private void deactivate() {
+        active = false;
+        heroLocation.setX(-1000); // 将英雄移除场外，避免可能仍在运行的怪物行为逻辑误判
+
+        refresher.interrupt();
+    }
+
+    class DungeonViewRefresher implements Runnable {
+
+        public void run() {
+            while(active) {
+                try {
+                    Thread.sleep(20); // 少于50帧/秒
+                } catch (InterruptedException e) {
+                    break;
+                }
+                Dungeon.this.notifyAll(EventType.DUNGEON_UI_REFRESH, Dungeon.this);
+            }
+        }
+
     }
 
     public void start() {
@@ -210,7 +239,6 @@ public class Dungeon implements Observable, Serializable {
         observers.remove(observer);
     }
 
-    //TODO 根据需要发送“地图改变的消息”，也可使按照时间（帧数）控制
     public void notifyAll(EventType eventType, Object event) {
         for (Observer ob : observers) {
             ob.notifyEvent(eventType, event);

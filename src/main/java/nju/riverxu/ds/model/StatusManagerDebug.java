@@ -62,7 +62,7 @@ public class StatusManagerDebug implements StatusManager {
         SaveManager saveManager = game.getManagerFactory().makeSaveManager();
         for(int unlockId:id.getNextUnlock()) {
 
-            TourInfo tourInfo = missionStatus.getInfoArray()[unlockId];
+            TourInfo tourInfo = missionStatus.getInfoArray()[unlockId-1];
             tourInfo.setAttemptTimes(tourInfo.getAttemptTimes()+1);
             if(success) {
                 tourInfo.setUnlocked(true);

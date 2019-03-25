@@ -1,8 +1,11 @@
 package nju.riverxu.ds.view;
 
+import nju.riverxu.ds.Main;
+import nju.riverxu.ds.controller.TourController;
 import nju.riverxu.ds.model.Game;
 import nju.riverxu.ds.model.GameState;
 import nju.riverxu.ds.model.TourManager;
+import nju.riverxu.ds.model.tour.Dungeon;
 import nju.riverxu.ds.model.tour.Tour;
 import nju.riverxu.ds.util.EventType;
 import nju.riverxu.ds.util.Observer;
@@ -23,6 +26,8 @@ public class TourPanel extends JPanel implements Observer {
     private DungeonPanel dungeonPanel = null;
     private LogPanel logPanel = null;
 
+    private TourController controller = null;
+
     public TourPanel() {
         Game game = Game.getInstance();
         tourManager = game.getTourManager();
@@ -33,18 +38,20 @@ public class TourPanel extends JPanel implements Observer {
 
         assert game.getGameState()== GameState.TOUR;
         tour = tourManager.getCurrentTour();
-        //TODO init DungeonPanel, LogPanel and add them to this
-        add(new JLabel("TOUR PANEL"), BorderLayout.NORTH);
-
-        logPanel = new LogPanel();
-
-        add(dungeonPanel, BorderLayout.CENTER);
-        add(logPanel, BorderLayout.EAST);
-
         // Listen to events that dungeon changes.
         tour.addObserver(this);
 
-        addKeyListener(tourManager.getTourController());
+        dungeonPanel = new DungeonPanel(tour.getCurrent());
+        add(dungeonPanel, BorderLayout.CENTER);
+
+        logPanel = new LogPanel();
+        add(logPanel, BorderLayout.SOUTH);
+
+        controller = tourManager.getTourController();
+        assert controller != null;
+
+        logPanel.area.addKeyListener(controller);
+        //dungeonPanel.addKeyListener();
         setVisible(true);
     }
 
@@ -54,12 +61,21 @@ public class TourPanel extends JPanel implements Observer {
             case TOUR_END:
                 assert event == tour;
                 tour.removeObserver(this);
+                logPanel.area.removeKeyListener(controller);
                 System.out.println("TourPanel: Removing TourPanel from TourManager's observer list.");
                 break;
             case DUNGEON_SWITCHED:
-            //TODO 变换DungeonPanel
+                switchDungeon((Dungeon) event);
+                break;
             default:
                 break;
         }
+    }
+
+    private void switchDungeon(Dungeon d) {
+        remove(dungeonPanel);
+        dungeonPanel = new DungeonPanel(d);
+        //dungeonPanel.addKeyListener(tourManager.getTourController());
+        add(dungeonPanel);
     }
 }

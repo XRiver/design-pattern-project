@@ -65,6 +65,8 @@ public class Dungeon implements Observable, Serializable {
         return heroLocation;
     }
 
+    public Location getMobLocation(Mob m) {return mobLocationHashMap.get(m);}
+
     /**
      * 搜索一个点上的或一片区域内的所有Spirit；当size为null，则为单点，否则搜索矩形区域的所有Spirit
      *
@@ -154,6 +156,7 @@ public class Dungeon implements Observable, Serializable {
                 break;
             default:
                 tour.switchDungeon(e.getLeadTo());
+                heroLocation.setX(-1000); // 将英雄移除场外，避免可能仍在运行的怪物行为逻辑误判
                 active = false;
                 break;
         }

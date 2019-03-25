@@ -2,6 +2,7 @@ package nju.riverxu.ds.model.spirit.hero;
 
 
 import nju.riverxu.ds.model.item.*;
+import nju.riverxu.ds.model.item.weapon.Shield;
 import nju.riverxu.ds.model.spirit.AttackInfo;
 import nju.riverxu.ds.model.spirit.AttackResult;
 import nju.riverxu.ds.model.spirit.Direction;
@@ -12,8 +13,11 @@ import nju.riverxu.ds.model.tour.Dungeon;
 import nju.riverxu.ds.model.tour.Location;
 import nju.riverxu.ds.model.tour.Tour;
 import nju.riverxu.ds.util.Algorithm;
+import org.javatuples.Pair;
 import org.javatuples.Triplet;
+import org.javatuples.Tuple;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -41,56 +45,67 @@ public class Hero extends Spirit implements OperatedCharacter {
 
     /**
      * 一般只由Hero.act()调用；也可由“攻击性法术类”（如SmallFireball）进行调用
+     *
      * @param weapon
      */
     public void useWeapon(Weapon weapon) {
         Dungeon d = tour.getCurrent();
         Location myLoc = d.getHeroLocation();
 
-        Location attacked = Algorithm.getMigratedLocation(myLoc,direction,getRadius()+weapon.getWeaponRange().getRange());
-        Mob[] targets = d.getMobs(attacked,null);
+        Location attacked = Algorithm.getMigratedLocation(myLoc, direction, getRadius() + weapon.getWeaponRange().getRange());
+        Mob[] targets = d.getMobs(attacked, null);
 
-        if(targets.length>0) {
+        if (targets.length > 0) {
             AttackInfo attackInfo = new AttackInfo(this, myLoc, weapon, activeEffects, weapon.getRawDamage(this));
-            for(Mob m:targets) {
+            for (Mob m : targets) {
                 AttackResult attackResult = m.getDamaged(attackInfo);
-                if(attackResult.isKilled()) {
+                if (attackResult.isKilled()) {
                     // Add souls
                     ItemSuite itemSuite = status.getItemSuite();
-                    itemSuite.setSoulCount(m.soulCount()+itemSuite.getSoulCount());
+                    itemSuite.setSoulCount(m.soulCount() + itemSuite.getSoulCount());
                 }
             }
         }
     }
 
     private transient double hp, max_hp;
+
     public void heal(Item healBy, double amount) {
-        hp = Math.min(max_hp, hp+amount);
+        hp = Math.min(max_hp, hp + amount);
     }
 
     public AttackResult getDamaged(AttackInfo info) {
         assert info.getFromSpirit() instanceof Mob;
+
         double realDamage = status.getArmorSuite().getRealDamage(info, this);
 
-        if(hp <= realDamage) {
+        if(leftHandBlocking) { // 判断攻击方向也行，但是麻烦，就不写了
+            Weapon lw = status.getWeaponSuite().getLeftHand();
+            if(lw instanceof Shield) {
+                Shield shield = (Shield) lw;
+                realDamage = shield.getBlockeDamage(realDamage); // 再减伤一次
+            }
+        }
+
+        if (hp <= realDamage) {
             die();
-            return new AttackResult(true,AttackResult.EFFECTIVE, realDamage);
+            return new AttackResult(true, AttackResult.EFFECTIVE, realDamage);
         } else {
             hp -= realDamage;
-            return new AttackResult(false,AttackResult.EFFECTIVE,realDamage);
+            return new AttackResult(false, AttackResult.EFFECTIVE, realDamage);
         }
     }
 
     private void useConsumable(int ind) {
-        Consumable c = status.getConsumableSkillSuite().getConsumable(ind-1);
-        if(c!=null) {
+        Consumable c = status.getConsumableSkillSuite().getConsumable(ind - 1);
+        if (c != null) {
             c.affect(this);
         }
     }
 
     private void useSkill(int ind) {
-        Skill s = status.getConsumableSkillSuite().getSkill(ind-1);
-        if(s!=null) {
+        Skill s = status.getConsumableSkillSuite().getSkill(ind - 1);
+        if (s != null) {
             s.affect(this);
         }
     }
@@ -118,11 +133,100 @@ public class Hero extends Spirit implements OperatedCharacter {
         activeEffects.remove(e);
     }
 
+    // Demo设定为左手只能防御，右手做各种操作（攻击、技能、消耗品）
+    private boolean leftHandBlocking = false, rightHandPreparing = false;
+    private Triplet<ActionSlot, Boolean, Long> rightHandBusiness = null;
+    private List<Pair<ActionSlot, Long>> scheduledAction = new ArrayList<Pair<ActionSlot, Long>>();
+    private int actionPtr = 0;
 
     @Override
     public void act() {
-        //TODO !!
+        // 每个动作帧的行为：
+        // 移动操作；移动状态由startMove stopMove已经设置好
+        frameMove();
 
+        // 规划动作
+        while (!actionCommands.isEmpty()) {
+            Triplet<ActionSlot, Boolean, Long> action = actionCommands.poll();
+            switch (action.getValue0()) {
+                // 举盾判定，由“开始动作”触发,而且会取消右手动作
+                case LEFT_HAND:
+                    if (action.getValue1()) {
+                        leftHandBlocking = true;
+                        rightHandPreparing = false;
+                    } else {
+                        leftHandBlocking = false;
+                    }
+                    break;
+                // 右手操作，由“结束动作”触发，而且会取消举盾
+                case RIGHT_HAND:
+                case SKILL_1:
+                case SKILL_2:
+                case SKILL_3:
+                case SKILL_4:
+                case SKILL_5:
+                case CONS_1:
+                case CONS_2:
+                case CONS_3:
+                case CONS_4:
+                case CONS_5:
+                    leftHandBlocking = false;
+                    if (action.getValue1()) {
+                        rightHandPreparing = true;
+                        rightHandBusiness = action;
+                    } else {
+                        if (action.getValue0() == rightHandBusiness.getValue0()) {
+                            // 设置5帧的动作规划延迟，有一点点Dark Soul的感觉
+                            rightHandPreparing = false;
+                            scheduledAction.add(new Pair<ActionSlot, Long>(action.getValue0(), action.getValue2() + 5));
+                        }
+                    }
+                    break;
+            }
+        }
+
+        // 执行动作
+        while (scheduledAction.size() > actionPtr && scheduledAction.get(actionPtr).getValue1() == frame.get()) {
+            Pair<ActionSlot, Long> action = scheduledAction.get(actionPtr);
+            actionPtr += 1;
+
+            long prevActionFrame = -9999;
+            if (actionPtr > 0) {
+                prevActionFrame = scheduledAction.get(actionPtr - 1).getValue1();
+            }
+
+            // 右手动作之间设置10帧的最小间隔
+            if (action.getValue1() - prevActionFrame < 10) {
+                continue; // 不允许一通乱按
+            }
+
+            switch (action.getValue0()) {
+                case RIGHT_HAND:
+                    useWeapon(status.getWeaponSuite().getRightHand());
+                    break;
+                case SKILL_1:
+                case SKILL_2:
+                case SKILL_3:
+                case SKILL_4:
+                case SKILL_5:
+                    useSkill(action.getValue0().getInd());
+                    break;
+                case CONS_1:
+                case CONS_2:
+                case CONS_3:
+                case CONS_4:
+                case CONS_5:
+                    useConsumable(action.getValue0().getInd());
+                    break;
+            }
+        }
+    }
+
+    private void frameMove() {
+        // 每帧移动距离为1
+        double totald = Math.sqrt(xMoveStatus * xMoveStatus + yMoveStatus * yMoveStatus);
+        Dungeon d = tour.getCurrent();
+        d.move(this, new Location(xMoveStatus / totald, yMoveStatus / totald));
     }
 
     // -1,0,1分别表示正在在此轴上向负方向移动/不动/向正方向移动

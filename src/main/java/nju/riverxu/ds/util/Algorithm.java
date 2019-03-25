@@ -54,4 +54,27 @@ public class Algorithm {
                 return null;
         }
     }
+
+    public static Direction getRelativeDirection(Location base, Location target) {
+        Direction ret = Direction.NORTH;
+        double xRelative = target.getX()-base.getX();
+        double yRelative = target.getY() - base.getY();
+
+        if(xRelative > 0) { // EAST/N/S
+            ret = Direction.EAST;
+            if(yRelative > xRelative) {
+                ret = Direction.SOUTH;
+            } else if (yRelative < -xRelative) {
+                ret = Direction.NORTH;
+            }
+        } else { //WEST/N/S
+            ret = Direction.WEST;
+            if(yRelative < xRelative) {
+                ret = Direction.NORTH;
+            } else if(yRelative > -xRelative) {
+                ret = Direction.SOUTH;
+            }
+        }
+        return ret;
+    }
 }

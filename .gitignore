@@ -25,3 +25,6 @@ hs_err_pid*
 .idea
 design-pattern-project.iml
 target
+hero.save
+mission.save
+tour*

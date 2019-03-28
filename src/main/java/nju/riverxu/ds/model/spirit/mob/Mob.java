@@ -45,4 +45,13 @@ public abstract class Mob extends Spirit {
 
     protected transient Dungeon d;
     public void setDungeon(Dungeon d) {this.d = d;}
+
+    @Override
+    public String toString() {
+        return "Mob{" +
+                "max_hp=" + max_hp +
+                ", hp=" + hp +
+                ", direction=" + direction +
+                '}';
+    }
 }

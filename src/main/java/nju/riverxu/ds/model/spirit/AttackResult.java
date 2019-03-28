@@ -31,9 +31,9 @@ public class AttackResult {
     @Override
     public String toString() {
         return "AttackResult{" +
-                "killed=" + killed +
-                ", effect=" + effect +
-                ", realDamage=" + realDamage +
+                "成功击杀=" + killed +
+                ", 效果=" + effect +
+                ", 造成伤害=" + realDamage +
                 '}';
     }
 }

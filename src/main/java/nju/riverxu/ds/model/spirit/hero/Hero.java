@@ -64,12 +64,13 @@ public class Hero extends Spirit implements OperatedCharacter {
         Location attacked = Algorithm.getMigratedLocation(myLoc, direction, getRadius() + weapon.getWeaponRange().getRange());
         Mob[] targets = d.getMobs(attacked, null);
 
-        System.out.println("Hero使用武器"+weapon.getName()+"攻击，有"+targets.length+"个目标");
+        System.out.println("Hero使用武器"+weapon.getName()+"攻击，击中"+targets.length+"个目标");
         if (targets.length > 0) {
             AttackInfo attackInfo = new AttackInfo(this, myLoc, weapon, activeEffects, weapon.getRawDamage(this));
             for (Mob m : targets) {
                 AttackResult attackResult = m.getDamaged(attackInfo);
                 System.out.println(attackResult);
+                System.out.println("目标状态"+m);
                 if (attackResult.isKilled()) {
                     // Add souls
                     ItemSuite itemSuite = status.getItemSuite();
@@ -122,7 +123,6 @@ public class Hero extends Spirit implements OperatedCharacter {
     }
 
     public void interact() {
-        halt();
         tour.getCurrent().interact(this);
     }
 
@@ -154,6 +154,7 @@ public class Hero extends Spirit implements OperatedCharacter {
     private Triplet<ActionSlot, Boolean, Long> rightHandBusiness = null;
     private List<Pair<ActionSlot, Long>> scheduledAction = new ArrayList<Pair<ActionSlot, Long>>();
     private int actionPtr = 0;
+    private long prevActionFrame = 0;
 
     @Override
     public void act() {
@@ -164,6 +165,7 @@ public class Hero extends Spirit implements OperatedCharacter {
         // 规划动作
         while (!actionCommands.isEmpty()) {
             Triplet<ActionSlot, Boolean, Long> action = actionCommands.poll();
+            //System.out.println("Polled "+ action.getValue0()+ "-"+action.getValue1());
             switch (action.getValue0()) {
                 // 举盾判定，由“开始动作”触发,而且会取消右手动作
                 case LEFT_HAND:
@@ -191,7 +193,7 @@ public class Hero extends Spirit implements OperatedCharacter {
                         rightHandPreparing = true;
                         rightHandBusiness = action;
                     } else {
-                        if (action.getValue0() == rightHandBusiness.getValue0()) {
+                        if (rightHandPreparing && action.getValue0() == rightHandBusiness.getValue0()) {
                             // 设置5帧的动作规划延迟，有一点点Dark Soul的感觉
                             rightHandPreparing = false;
                             scheduledAction.add(new Pair<ActionSlot, Long>(action.getValue0(), action.getValue2() + 5));
@@ -204,9 +206,9 @@ public class Hero extends Spirit implements OperatedCharacter {
         // 执行动作
         while (scheduledAction.size() > actionPtr && scheduledAction.get(actionPtr).getValue1() == frame.get()) {
             Pair<ActionSlot, Long> action = scheduledAction.get(actionPtr);
-            actionPtr += 1;
 
-            long prevActionFrame = -9999;
+
+
             if (actionPtr > 0) {
                 prevActionFrame = scheduledAction.get(actionPtr - 1).getValue1();
             }
@@ -235,18 +237,29 @@ public class Hero extends Spirit implements OperatedCharacter {
                     useConsumable(action.getValue0().getInd());
                     break;
             }
+
+            actionPtr += 1;
         }
     }
 
-    private void halt() {
-        xMoveStatus = yMoveStatus = 0;
-        leftHandBlocking = false;
-        rightHandPreparing = false;
+    private void changeDirection() {
+        if(yMoveStatus==1) {
+            direction = Direction.SOUTH;
+        } else if(yMoveStatus==-1) {
+            direction = Direction.NORTH;
+        }
+
+        if(xMoveStatus==1) {
+            direction = Direction.EAST;
+        } else if(xMoveStatus==-1) {
+            direction = Direction.WEST;
+        }
     }
 
     private void frameMove() {
         // 每帧移动距离为1
         double totald = Math.sqrt(xMoveStatus * xMoveStatus + yMoveStatus * yMoveStatus);
+        changeDirection();
         if(totald!=0.0) {
             Dungeon d = tour.getCurrent();
             d.move(this, new Location(xMoveStatus / totald, yMoveStatus / totald));
@@ -292,10 +305,12 @@ public class Hero extends Spirit implements OperatedCharacter {
             new ConcurrentLinkedQueue<Triplet<ActionSlot, Boolean, Long>>();
 
     public void startUse(ActionSlot a) {
+        //System.out.println("Added start use "+a);
         actionCommands.add(new Triplet<ActionSlot, Boolean, Long>(a, true, frame.get()));
     }
 
     public void stopUse(ActionSlot a) {
+        //System.out.println("Added stop use " + a);
         actionCommands.add(new Triplet<ActionSlot, Boolean, Long>(a, false, frame.get()));
     }
 

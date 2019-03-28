@@ -23,10 +23,10 @@ public class DefaultCharacterControllerConfig implements CharacterControllerConf
 
 
     public void keyTyped(KeyEvent e) {
-        released(KeyEvent.getExtendedKeyCodeForChar(e.getKeyChar()));
     }
 
     public void keyPressed(KeyEvent e) {
+        //System.out.println("DefaultCharacterControllerConfig: Pressed " + e.getKeyChar());
         switch (e.getKeyCode()) {
             case KeyEvent.VK_W:
                 c.startMove(Direction.NORTH);
@@ -82,12 +82,7 @@ public class DefaultCharacterControllerConfig implements CharacterControllerConf
     }
 
     public void keyReleased(KeyEvent e) {
-        System.out.println("DefaultCharacterControllerConfig: Released " + e.getKeyChar());
-        released(e.getKeyCode());
-    }
-
-    public void released(int keycode) {
-        switch (keycode) {
+        switch (e.getKeyCode()) {
             case KeyEvent.VK_W:
                 c.stopMove(Direction.NORTH);
                 break;

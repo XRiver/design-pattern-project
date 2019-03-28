@@ -44,7 +44,7 @@ public class TourController implements KeyListener {
     }
 
     public void keyReleased(KeyEvent e) {
-        conf.keyPressed(e);
+        conf.keyReleased(e);
     }
 
     public CharacterControllerConfig getConf() {

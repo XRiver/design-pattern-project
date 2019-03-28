@@ -25,7 +25,8 @@ public class MobSkeleton extends Mob {
         Hero h = d.getHero();
         Location heroLocation = d.getHeroLocation();
         if(attacked.distance(heroLocation) < h.getRadius()) {
-            h.getDamaged(new AttackInfo(this, myLoc, w, null, w.getRawDamage(this)));
+            AttackResult damaged = h.getDamaged(new AttackInfo(this, myLoc, w, null, w.getRawDamage(this)));
+            System.out.println("怪物发动攻击效果:"+damaged);
         }
     }
 
@@ -55,7 +56,7 @@ public class MobSkeleton extends Mob {
         direction = Algorithm.getRelativeDirection(myLocation,heroLocation);
 
         if(myLocation.distance(heroLocation) < 10) { //够近
-            if(frame.get()-lastAttack > DEFAULT_FRAME_PER_SEC*5) { // 攻击CD为5秒
+            if(frame.get()-lastAttack > DEFAULT_FRAME_PER_SEC*3) { // 攻击CD为3秒
                 useWeapon(myWeapon);
                 lastAttack = frame.get();
             }

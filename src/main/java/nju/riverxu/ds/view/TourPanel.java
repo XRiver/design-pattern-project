@@ -28,6 +28,8 @@ public class TourPanel extends JPanel implements Observer {
 
     private TourController controller = null;
 
+    private MainFrame mf = MainFrame.getInstance();
+
     public TourPanel() {
         Game game = Game.getInstance();
         tourManager = game.getTourManager();
@@ -50,9 +52,12 @@ public class TourPanel extends JPanel implements Observer {
         controller = tourManager.getTourController();
         assert controller != null;
 
-        logPanel.area.addKeyListener(controller);
+        mf.addKeyListener(controller);
+
+        //logPanel.area.addKeyListener(controller);
         //dungeonPanel.addKeyListener();
         setVisible(true);
+        mf.requestFocus();
     }
 
 
@@ -61,7 +66,7 @@ public class TourPanel extends JPanel implements Observer {
             case TOUR_END:
                 assert event == tour;
                 tour.removeObserver(this);
-                logPanel.area.removeKeyListener(controller);
+                mf.removeKeyListener(controller);
                 System.out.println("TourPanel: Removing TourPanel from TourManager's observer list.");
                 break;
             case DUNGEON_SWITCHED:
